@@ -1,4 +1,7 @@
-﻿using System;
+﻿using KinectSensorStreams.View;
+using KinectSensorStreams.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;

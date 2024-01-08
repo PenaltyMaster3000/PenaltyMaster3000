@@ -28,11 +28,17 @@ namespace KinectSensorStreams.View
 
         #region Constructor
 
-        public MainWindow(MainWindowVM mainWindowVM)
+        public MainWindow()
         {
-            MainWindowVM = mainWindowVM;
+            MainWindowVM = new MainWindowVM();
             InitializeComponent();
             DataContext = MainWindowVM;
+        }
+
+        public override void BeginInit()
+        {
+            base.BeginInit();
+            MainWindowVM.StartCommand.Execute(null);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using KinectConnection;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace KinectSensorStreams.ViewModel
 {
@@ -13,11 +15,13 @@ namespace KinectSensorStreams.ViewModel
     {
         #region Properties
 
-        public Color EllipseColor { get; set; }
+        public System.Windows.Media.Brush EllipseColor { get; set; }
+
+        public string KinectStateText { get; set; }
 
         public ICommand StartCommand { get; set; }
 
-        public ICommand StopCommand { get; set; }
+        public KinectManager KinectManager { get; set; }
 
         #endregion
 
@@ -25,8 +29,9 @@ namespace KinectSensorStreams.ViewModel
 
         public MainWindowVM() 
         {
+            EllipseColor = new SolidColorBrush(Colors.Green);
+            KinectManager = new KinectManager();
             StartCommand = new RelayCommand(Start);
-            StopCommand = new RelayCommand(Stop);
         }
 
         #endregion
@@ -35,14 +40,8 @@ namespace KinectSensorStreams.ViewModel
 
         private void Start()
         {
-
-            EllipseColor = Color.Green;
-        }
-
-        private void Stop()
-        {
-
-            EllipseColor = Color.Red;
+            KinectManager.kinectSensor.Open();
+            EllipseColor = new SolidColorBrush(Colors.Green);   
         }
 
         #endregion

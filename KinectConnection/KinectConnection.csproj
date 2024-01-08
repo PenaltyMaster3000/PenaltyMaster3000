@@ -48,12 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KinectSensorStreams\KinectSensorStreams.csproj">
-      <Project>{7004f18c-b43f-4111-a7fa-d803217d5474}</Project>
-      <Name>KinectSensorStreams</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
