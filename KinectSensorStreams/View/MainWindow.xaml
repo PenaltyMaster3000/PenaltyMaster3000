@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:toolkit="clr-namespace:CommunityToolkit.Mvvm.Input;assembly=CommunityToolkit.Mvvm"
         xmlns:local="clr-namespace:KinectSensorStreams.View"
+        xmlns:converter="clr-namespace:KinectSensorStreams.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
+    <Window.Resources>
+        <converter:KinectStatusToColorConverter x:Key="KinectStatusToColorConverter" />
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -28,7 +33,7 @@
                 
             <Ellipse Width="30"
                      Height="30"
-                     Fill="{Binding Path=EllipseColor}"
+                     Fill="{Binding KinectManager.Status, Converter={StaticResource KinectStatusToColorConverter}}"
                      Grid.Column="1"/>
             <TextBlock Text="{Binding KinectManager.StatusText}"
                        VerticalAlignment="Center"

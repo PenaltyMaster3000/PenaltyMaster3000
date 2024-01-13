@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using KinectConnection;
 using System;
 using System.Collections.Generic;
@@ -15,21 +16,25 @@ namespace KinectSensorStreams.ViewModel
     {
         #region Properties
 
-        public System.Windows.Media.Brush EllipseColor { get; set; }
-
-        public string KinectStateText { get; set; }
-
+        /// <summary>
+        /// Propriété liée à la commande appelée au démarrage de la page principale
+        /// </summary>
         public ICommand StartCommand { get; set; }
 
+        /// <summary>
+        /// Propriété liée à l'objet KinectManager
+        /// </summary>
         public KinectManager KinectManager { get; set; }
 
         #endregion
 
         #region Constructor 
 
+        /// <summary>
+        /// Constructeur du ViewModel de la page principale
+        /// </summary>
         public MainWindowVM() 
         {
-            EllipseColor = new SolidColorBrush(Colors.Green);
             KinectManager = new KinectManager();
             StartCommand = new RelayCommand(Start);
         }
@@ -38,10 +43,12 @@ namespace KinectSensorStreams.ViewModel
 
         #region Methods
 
+        /// <summary>
+        /// Méthode initialisée au lancement de la page principale pour savoir si le Kinect est disponible ou non
+        /// </summary>
         private void Start()
         {
-            KinectManager.kinectSensor.Open();
-            EllipseColor = new SolidColorBrush(Colors.Green);   
+            KinectManager.StartSensor();
         }
 
         #endregion
