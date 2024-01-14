@@ -78,6 +78,11 @@ namespace KinectConnection
             {
                 this.StopSensor();
             }
+            // if its plugged back => trigger the start method
+            else
+            {
+                this.StartSensor();
+            }
         }
     }
 }
