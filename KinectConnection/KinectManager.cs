@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace KinectConnection
 {
     /// <summary>
-    /// Classe KinectManager permettant la gestion des évènements autour du Kinect
+    /// Manages Kinect events.
     /// </summary>
     public class KinectManager : ObservableObject
     {
@@ -21,7 +21,7 @@ namespace KinectConnection
         private string statusText;
 
         /// <summary>
-        /// Constructeur de la classe KinectManager
+        /// Initializes a new instance of the KinectManager class.
         /// </summary>
         public KinectManager()
         {
@@ -30,7 +30,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Propriété définissant le statut de l'état actuel du Kinect sous la forme d'un booléen
+        /// Gets or sets a value indicating whether the Kinect is available.
         /// </summary>
         public bool Status
         {
@@ -39,7 +39,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Propriété définissant le statut de l'état actuel du Kinect sous la forme d'un string
+        /// Gets or sets the status text of the Kinect.
         /// </summary>
         public string StatusText
         {
@@ -48,7 +48,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Méthode permettant de lancer la méthode Open du KinectSensor et de s'abonner à l'évènement "IsAvailableChanged"
+        /// Starts the Kinect sensor and subscribes to the IsAvailableChanged event.
         /// </summary>
         public void StartSensor()
         {
@@ -57,7 +57,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Méthode permettant de lancer la méthode Close du KinectSensor et de se désabonner à l'évènement "IsAvailableChanged"
+        /// Stops the Kinect sensor and unsubscribes from the IsAvailableChanged event.
         /// </summary>
         public void StopSensor()
         {
@@ -66,10 +66,8 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Évènement IsAvailableChanged permettant de mettre à jour les propriétés du KinectManager en fonction de l'état du kinect
+        /// Updates the KinectManager properties based on the Kinect's availability.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void KinectSensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs args)
         {
             this.StatusText = this.kinectSensor.IsAvailable ? "Kinect Available" : "Kinect Not Available";
