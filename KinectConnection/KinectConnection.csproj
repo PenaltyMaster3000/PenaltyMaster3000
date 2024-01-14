@@ -77,10 +77,10 @@
   <ItemGroup>
     <Compile Include="ColorImageStream.cs" />
     <Compile Include="DepthImageStream.cs" />
-    <Compile Include="InfraredImgaeStream.cs" />
+    <Compile Include="InfraredImageStream.cs" />
     <Compile Include="KinectManager.cs" />
     <Compile Include="KinectStream.cs" />
-    <Compile Include="KinectStreams.cs" />
+    <Compile Include="enums\KinectStreams.cs" />
     <Compile Include="KinectStreamsFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,9 +88,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

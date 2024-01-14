@@ -1,14 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using KinectConnection;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace KinectSensorStreams.ViewModel
 {
@@ -33,7 +25,7 @@ namespace KinectSensorStreams.ViewModel
         /// <summary>
         /// Constructeur du ViewModel de la page principale
         /// </summary>
-        public MainWindowVM() 
+        public MainWindowVM()
         {
             KinectManager = new KinectManager();
             StartCommand = new RelayCommand(Start);

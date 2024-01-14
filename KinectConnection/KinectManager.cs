@@ -1,13 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Kinect;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Resources;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KinectConnection
 {
