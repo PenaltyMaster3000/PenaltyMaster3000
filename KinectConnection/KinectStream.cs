@@ -12,7 +12,9 @@ namespace KinectConnection
     /// </summary>
     public abstract class KinectStream
     {
+        // Redondant d'avoir KinectSensor et KinectManager ici ? (car sensor dans manager)
         protected KinectSensor KinectSensor { get; set; }
+        protected KinectManager KinectManager { get; set; }
 
         public abstract void Start();
 
