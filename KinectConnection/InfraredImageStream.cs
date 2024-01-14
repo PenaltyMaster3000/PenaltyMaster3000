@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace KinectConnection
 {
     /// <summary>
-    /// The infrared image stream.
+    /// The infrared image stream .
     /// </summary>
     public class InfraredImageStream : KinectStream
     {
