@@ -37,6 +37,7 @@ namespace KinectSensorStreams.ViewModel
         {
             KinectManager = new KinectManager();
             StartCommand = new RelayCommand(Start);
+            // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
         }
 
         #endregion
