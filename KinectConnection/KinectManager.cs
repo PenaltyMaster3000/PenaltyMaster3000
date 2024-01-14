@@ -72,6 +72,12 @@ namespace KinectConnection
         {
             this.StatusText = this.kinectSensor.IsAvailable ? "Kinect Available" : "Kinect Not Available";
             this.Status = this.kinectSensor.IsAvailable;
+
+            // if sensor is unplugged => trigger the stop method
+            if (!this.kinectSensor.IsAvailable)
+            {
+                this.StopSensor();
+            }
         }
     }
 }
