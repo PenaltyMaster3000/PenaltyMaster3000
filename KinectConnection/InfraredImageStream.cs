@@ -9,7 +9,7 @@ namespace KinectConnection
     /// <summary>
     /// The infrared image stream.
     /// </summary>
-    public class InfraredImgaeStream : KinectStream
+    public class InfraredImageStream : KinectStream
     {
         public override void Start()
         {
