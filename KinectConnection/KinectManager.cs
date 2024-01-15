@@ -12,6 +12,8 @@ namespace KinectConnection
         private bool status;
         private string statusText;
 
+        public KinectSensor KinectSensor {  get { return kinectSensor; } }
+
         /// <summary>
         /// Initializes a new instance of the KinectManager class.
         /// </summary>

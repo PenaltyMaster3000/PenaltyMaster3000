@@ -13,10 +13,14 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         public ICommand StartCommand { get; set; }
 
+        public ICommand ColorCommand { get; set; }
+
         /// <summary>
         /// Propriété liée à l'objet KinectManager
         /// </summary>
         public KinectManager KinectManager { get; set; }
+
+        public ColorImageStream ColorImageStream { get; set; }
 
         #endregion
 
@@ -28,7 +32,9 @@ namespace KinectSensorStreams.ViewModel
         public MainWindowVM()
         {
             KinectManager = new KinectManager();
+            ColorImageStream = new ColorImageStream();
             StartCommand = new RelayCommand(Start);
+            ColorCommand = new RelayCommand(Color);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
         }
 
@@ -42,6 +48,11 @@ namespace KinectSensorStreams.ViewModel
         private void Start()
         {
             KinectManager.StartSensor();
+        }
+
+        private void Color()
+        {
+            ColorImageStream.Start();
         }
 
         #endregion
