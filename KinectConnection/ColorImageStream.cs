@@ -1,4 +1,5 @@
 ﻿using Microsoft.Kinect;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -24,7 +25,7 @@ namespace KinectConnection
             // create the colorFrameDescription from the ColorFrameSource using rgba format
             // the dimensions of the bitmap => match the dimensions of the color frame from the Kinect sensor.
             FrameDescription colorFrameDescription = this.KinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
-            this.bitmap = this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+            this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
 
             // open the reader for the color frames
             this.reader = this.KinectSensor.ColorFrameSource.OpenReader();
@@ -55,25 +56,31 @@ namespace KinectConnection
         {
             bool colorFrameProcessed = false;
 
+            this.bitmap.Lock();
+
             // ColorFrame is IDisposable
+            // We get the frame from the event
             using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
             {
                 if (colorFrame != null)
                 {
+                    // I get the frame description
                     FrameDescription colorFrameDescription = colorFrame.FrameDescription;
 
                     // verify data and write the new color frame data to the Writeable bitmap
                     if ((colorFrameDescription.Width == this.bitmap.PixelWidth) && (colorFrameDescription.Height == this.bitmap.PixelHeight))
                     {
+                        // default pixel format + 7 / 8 (7 columns and 8 bytes
+                        byte[] colorDataArray = new byte[colorFrameDescription.Width * colorFrameDescription.Height * ((PixelFormats.Bgr32.BitsPerPixel + 7) / 8)];
+
+
                         if (colorFrame.RawColorImageFormat == ColorImageFormat.Bgra)
                         {
-                            // ! Method not found
-                            //colorFrame.CopyRawFrameDataToBuffer(this.bitmap.PixelBuffer);
+                            colorFrame.CopyRawFrameDataToArray(colorDataArray);
                         }
                         else
                         {
-                            // ! Method not found
-                            //colorFrame.CopyConvertedFrameDataToBuffer(this.bitmap.PixelBuffer, ColorImageFormat.Bgra);
+                            colorFrame.CopyConvertedFrameDataToArray(colorDataArray, ColorImageFormat.Bgra);
                         }
 
                         colorFrameProcessed = true;
@@ -85,7 +92,7 @@ namespace KinectConnection
             if (colorFrameProcessed)
             {
                 // ! Method not found
-                //this.bitmap.Invalidate();
+                this.bitmap.Unlock();
             }
         }
     }
