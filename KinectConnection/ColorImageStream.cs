@@ -15,6 +15,12 @@ namespace KinectConnection
         /// </summary>
         private WriteableBitmap bitmap = null;
 
+        // so that we can bind to it in the MainWindow.xaml
+        public WriteableBitmap Bitmap
+        {
+            get { return this.bitmap; }
+        }
+
         /// <summary>
         /// The color frame reader.
         /// </summary>
@@ -70,7 +76,10 @@ namespace KinectConnection
                     // verify data and write the new color frame data to the Writeable bitmap
                     if ((colorFrameDescription.Width == this.bitmap.PixelWidth) && (colorFrameDescription.Height == this.bitmap.PixelHeight))
                     {
-                        // default pixel format + 7 / 8 (7 columns and 8 bytes
+                        // Explication du calcul : 
+                        // width * height = total de pixels dans l'image
+                        // PixelFormats.Bgr32.BitsPerPixel = rapport bits/pixel
+                        // diviser par 8 pour avoir le nombre de bytes par pixel
                         byte[] colorDataArray = new byte[colorFrameDescription.Width * colorFrameDescription.Height * ((PixelFormats.Bgr32.BitsPerPixel + 7) / 8)];
 
 
@@ -83,6 +92,15 @@ namespace KinectConnection
                             colorFrame.CopyConvertedFrameDataToArray(colorDataArray, ColorImageFormat.Bgra);
                         }
 
+                        // Write the color data to the bitmap 
+                        // Int32Rect : area within the bitmap to update => in this case all
+                        this.bitmap.WritePixels(
+                            new Int32Rect(0, 0, this.bitmap.PixelWidth, this.bitmap.PixelHeight),
+                            colorDataArray,
+                            this.bitmap.PixelWidth * sizeof(int),
+                            0);
+
+                        // flag that the frame was processed
                         colorFrameProcessed = true;
                     }
                 }
