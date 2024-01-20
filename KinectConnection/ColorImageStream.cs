@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Kinect;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -25,6 +26,13 @@ namespace KinectConnection
         /// The color frame reader.
         /// </summary>
         private ColorFrameReader reader;
+
+        public WriteableBitmap Bitmap { get { return bitmap; } set { SetProperty(ref bitmap, value); } }
+
+        public ColorImageStream() : base()
+        {
+
+        }
 
         public override void Start()
         {

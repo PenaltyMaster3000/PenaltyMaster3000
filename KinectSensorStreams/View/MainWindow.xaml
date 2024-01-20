@@ -16,9 +16,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -59,7 +59,8 @@
             <Button Content="Color"
                     Width="100"
                     Height="30"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                    Command="{Binding ColorCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -106,6 +107,12 @@
                     </Style>
                 </Button.Resources>
             </Button>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                <Image Source="{Binding KinectStream.Bitmap}"/>
+            </Viewbox>
         </Grid>
     </Grid>
 </Window>

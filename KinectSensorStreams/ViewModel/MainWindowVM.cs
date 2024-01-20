@@ -13,8 +13,11 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         public ICommand StartCommand { get; set; }
 
+        public ICommand ColorCommand { get; set; }
+
         /// <summary>
         /// Propriété liée à l'objet KinectManager
+        /// Maybe to remove now that we have the KinectStream attribute
         /// </summary>
         public KinectManager KinectManager { get; set; }
 
@@ -66,6 +69,11 @@ namespace KinectSensorStreams.ViewModel
             KinectStream.KinectManager.StartSensor();
             // Start the color stream reader
             KinectStream.Start();
+        }
+
+        private void Color()
+        {
+            ColorImageStream.Start();
         }
 
         #endregion
