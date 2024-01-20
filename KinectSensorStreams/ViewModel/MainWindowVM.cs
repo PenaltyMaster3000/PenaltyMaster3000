@@ -18,6 +18,17 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         public KinectManager KinectManager { get; set; }
 
+
+        /// <summary>
+        /// The Kinect streams factory.
+        /// </summary>
+        public KinectStreamsFactory KinectStreamsFactory { get; set; }
+
+        /// <summary>
+        /// The Kinect stream property.
+        /// </summary>
+        public KinectStream KinectStream { get; set; }
+
         #endregion
 
         #region Constructor 
@@ -27,7 +38,15 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         public MainWindowVM()
         {
+            // eventuellement a enlever :
             KinectManager = new KinectManager();
+
+            // factory
+            KinectStreamsFactory = new KinectStreamsFactory(new KinectManager());
+            // kinect stream => color stream for now
+            KinectStream = KinectStreamsFactory[KinectStreams.Color];
+
+
             StartCommand = new RelayCommand(Start);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
         }
@@ -41,7 +60,12 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         private void Start()
         {
-            KinectManager.StartSensor();
+            //KinectManager.StartSensor();
+            
+            // Start the kinect sensor
+            KinectStream.KinectManager.StartSensor();
+            // Start the color stream reader
+            KinectStream.Start();
         }
 
         #endregion
