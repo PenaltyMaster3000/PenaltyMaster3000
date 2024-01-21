@@ -27,8 +27,6 @@ namespace KinectConnection
         /// </summary>
         private ColorFrameReader reader;
 
-        public WriteableBitmap Bitmap { get { return bitmap; } set { SetProperty(ref bitmap, value); } }
-
         public ColorImageStream() : base()
         {
 

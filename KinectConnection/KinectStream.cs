@@ -9,8 +9,8 @@ namespace KinectConnection
     public abstract class KinectStream : ObservableObject
     {
         // Redondant d'avoir KinectSensor et KinectManager ici ? (car sensor dans manager)
-        protected KinectSensor KinectSensor { get; set; }
-        protected KinectManager KinectManager { get; set; }
+        public KinectSensor KinectSensor { get; set; }
+        public KinectManager KinectManager { get; set; }
 
         public abstract void Start();
 

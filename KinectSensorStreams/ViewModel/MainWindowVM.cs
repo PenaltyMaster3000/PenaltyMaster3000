@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using KinectConnection;
+using KinectConnection.enums;
 using System.Windows.Input;
 
 namespace KinectSensorStreams.ViewModel
@@ -52,6 +53,7 @@ namespace KinectSensorStreams.ViewModel
 
             StartCommand = new RelayCommand(Start);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
+            ColorCommand = new RelayCommand(Color);
         }
 
         #endregion
@@ -63,17 +65,17 @@ namespace KinectSensorStreams.ViewModel
         /// </summary>
         private void Start()
         {
-            //KinectManager.StartSensor();
+            KinectManager.StartSensor();
             
             // Start the kinect sensor
-            KinectStream.KinectManager.StartSensor();
+            //KinectStream.KinectManager.StartSensor();
             // Start the color stream reader
             KinectStream.Start();
         }
 
         private void Color()
         {
-            ColorImageStream.Start();
+            KinectStream.Start();
         }
 
         #endregion
