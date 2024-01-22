@@ -15,6 +15,7 @@ namespace KinectConnection
     {
         private BodyFrameReader reader;
         private Body[] bodies = null;
+        private Canvas drawingCanvas = null;
 
         public Body[] Bodies
         {
@@ -23,6 +24,8 @@ namespace KinectConnection
         }
 
         public Dictionary<JointType, Point> JointPoints { get; private set; }
+
+
 
         public BodyImageStream() : base()
         {
@@ -70,9 +73,9 @@ namespace KinectConnection
                 {
                     foreach (JointType jointType in body.Joints.Keys)
                     {
-                        // 3D space point
+                        // 3D 
                         CameraSpacePoint cameraSpacePoint = body.Joints[jointType].Position;
-                        // 2D space point
+                        // 2D 
                         ColorSpacePoint colorSpacePoint = this.KinectSensor.CoordinateMapper.MapCameraPointToColorSpace(cameraSpacePoint);
 
                         JointPoints[jointType] = new Point(colorSpacePoint.X, colorSpacePoint.Y);
