@@ -8,6 +8,7 @@
         None,
         Color,
         Depth,
-        IR
+        IR,
+        Body
     }
 }

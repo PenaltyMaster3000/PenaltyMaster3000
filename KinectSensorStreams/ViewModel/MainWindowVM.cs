@@ -1,12 +1,16 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using KinectConnection;
 using KinectConnection.enums;
+using System.Net.NetworkInformation;
 using System.Windows.Input;
 
 namespace KinectSensorStreams.ViewModel
 {
-    public class MainWindowVM
+    public class MainWindowVM : ObservableObject
     {
+        private KinectStream kinectStream;
+
         #region Properties
 
         /// <summary>
@@ -31,7 +35,11 @@ namespace KinectSensorStreams.ViewModel
         /// <summary>
         /// The Kinect stream property.
         /// </summary>
-        public KinectStream KinectStream { get; set; }
+        public KinectStream KinectStream
+        {
+            get { return kinectStream; }
+            set { SetProperty(ref kinectStream, value); }
+        }
 
         #endregion
 
@@ -48,7 +56,7 @@ namespace KinectSensorStreams.ViewModel
             // factory
             KinectStreamsFactory = new KinectStreamsFactory(new KinectManager());
             // kinect stream => color stream for now
-            KinectStream = KinectStreamsFactory[KinectStreams.Color];
+            KinectStream = KinectStreamsFactory[KinectStreams.Body];
 
 
             StartCommand = new RelayCommand(Start);
@@ -75,7 +83,7 @@ namespace KinectSensorStreams.ViewModel
 
         private void Color()
         {
-            KinectStream.Start();
+            //KinectStream.Start();
         }
 
         #endregion

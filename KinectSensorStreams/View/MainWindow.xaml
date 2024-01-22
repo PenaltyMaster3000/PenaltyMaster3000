@@ -110,8 +110,30 @@
         </Grid>
 
         <Grid Grid.Row="4">
-            <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                <Image Source="{Binding KinectStream.Bitmap}"/>
+            <Viewbox Grid.Row="1"
+                     HorizontalAlignment="Center"
+                     Height="400"
+                     Width="400">
+                <!--<Image Source="{Binding KinectStream.Bitmap}"/>-->
+                <ItemsControl ItemsSource="{Binding KinectStream.Bodies}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <ItemsControl ItemsSource="{Binding Joints.Values}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Ellipse Width="10" Height="10" Fill="Red">
+                                                <Ellipse.RenderTransform>
+                                                    <TranslateTransform X="{Binding Position.X}" Y="{Binding Position.Y}" />
+                                                </Ellipse.RenderTransform>
+                                            </Ellipse>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Viewbox>
         </Grid>
     </Grid>

@@ -20,6 +20,7 @@ namespace KinectConnection
             streamFactory = new Dictionary<KinectStreams, Func<KinectStream>>
         {
             { KinectStreams.Color, () => new ColorImageStream() },
+            { KinectStreams.Body, () => new BodyImageStream() },
             // Other streams ...
         };
         }
