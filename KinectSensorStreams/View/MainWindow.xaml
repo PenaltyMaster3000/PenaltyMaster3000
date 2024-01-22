@@ -124,7 +124,7 @@
                                         <DataTemplate>
                                             <Ellipse Width="10" Height="10" Fill="Red">
                                                 <Ellipse.RenderTransform>
-                                                    <TranslateTransform X="{Binding Position.X}" Y="{Binding Position.Y}" />
+                                                    <TranslateTransform X="{Binding JointPoints[HandRight].X}" Y="{Binding JointPoints[HandRight].Y}" />
                                                 </Ellipse.RenderTransform>
                                             </Ellipse>
                                         </DataTemplate>

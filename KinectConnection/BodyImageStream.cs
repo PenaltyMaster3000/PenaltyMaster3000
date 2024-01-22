@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -21,10 +22,13 @@ namespace KinectConnection
             set { SetProperty(ref bodies, value); }
         }
 
+        public Dictionary<JointType, Point> JointPoints { get; private set; }
+
         public BodyImageStream() : base()
         {
             // Initialize the bodies array
             this.bodies = new Body[this.KinectSensor.BodyFrameSource.BodyCount];
+            JointPoints = new Dictionary<JointType, Point>();
         }
 
         public override void Start()
@@ -60,17 +64,18 @@ namespace KinectConnection
             }
 
             // Process the body data
-            foreach (Body body in this.bodies)
+            foreach (var body in bodies)
             {
                 if (body.IsTracked)
                 {
-                    // Get the right hand joint
-                    Joint rightHand = body.Joints[JointType.HandRight];
-
-                    // Check the tracking state of the joint
-                    if (rightHand.TrackingState == TrackingState.Tracked)
+                    foreach (JointType jointType in body.Joints.Keys)
                     {
-                        CameraSpacePoint position = rightHand.Position;
+                        // 3D space point
+                        CameraSpacePoint cameraSpacePoint = body.Joints[jointType].Position;
+                        // 2D space point
+                        ColorSpacePoint colorSpacePoint = this.KinectSensor.CoordinateMapper.MapCameraPointToColorSpace(cameraSpacePoint);
+
+                        JointPoints[jointType] = new Point(colorSpacePoint.X, colorSpacePoint.Y);
                     }
                 }
             }
