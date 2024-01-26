@@ -16,8 +16,7 @@ namespace KinectConnection
         /// </summary>
         private WriteableBitmap bitmap = null;
 
-        // so that we can bind to it in the MainWindow.xaml
-        public WriteableBitmap Bitmap
+        public override ImageSource Source
         {
             get { return this.bitmap; }
         }

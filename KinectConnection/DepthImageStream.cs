@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 
 namespace KinectConnection
 {
@@ -7,6 +8,8 @@ namespace KinectConnection
     /// </summary>
     public class DepthImageStream : KinectStream
     {
+        public override ImageSource Source => throw new NotImplementedException();
+
         public override void Start()
         {
             throw new NotImplementedException();

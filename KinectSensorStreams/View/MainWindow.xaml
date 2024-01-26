@@ -114,8 +114,7 @@
                      HorizontalAlignment="Center"
                      Height="400"
                      Width="400">
-                <!--<Image Source="{Binding KinectStream.Bitmap}"/>-->
-                <Grid x:Name="DisplayGrid" Background="Black" Width="512" Height="414"/>
+                <Image Source="{Binding KinectStream.Source}"/>
             </Viewbox>
         </Grid>
     </Grid>
