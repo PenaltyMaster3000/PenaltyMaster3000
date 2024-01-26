@@ -12,6 +12,10 @@ using System.Windows.Shapes;
 
 namespace KinectConnection
 {
+    /// <summary>
+    /// Classe représentant un flux d'image du corps pour la Kinect.
+    /// Étend la classe KinectStream.
+    /// </summary>
     public class BodyImageStream : KinectStream
     {
         private BodyFrameReader bodyFrameReader = null;
@@ -34,11 +38,17 @@ namespace KinectConnection
         private int displayHeight;
         private int displayWidth;
 
+        /// <summary>
+        /// Obtient la source d'image de la classe.
+        /// </summary>
         public override ImageSource Source
         {
             get { return this.imageSource; }
         }
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe BodyImageStream.
+        /// </summary>
         public BodyImageStream() : base()
         {
             this.coordinateMapper = this.KinectSensor.CoordinateMapper;
@@ -90,6 +100,9 @@ namespace KinectConnection
             this.imageSource = new DrawingImage(this.drawingGroup);
         }
 
+        /// <summary>
+        /// Démarre la lecture du flux de corps.
+        /// </summary>
         public override void Start()
         {
             if (this.KinectSensor != null)
@@ -103,19 +116,27 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Arrête la lecture du flux de corps.
+        /// </summary>
         public override void Stop()
         {
             if (this.bodyFrameReader != null)
             {
                 this.bodyFrameReader.FrameArrived -= this.Reader_BodyFrameArrived;
 
-                // Dispose the reader to free resources.
-                // If we don't dispose manualy, the gc will do it for us, but we don't know when.
+                // Dispose le lecteur pour libérer les ressources.
+                // Si on ne le fait pas manuellement, le GC le fera pour nous, mais nous ne savons pas quand.
                 this.bodyFrameReader.Dispose();
                 this.bodyFrameReader = null;
             }
         }
 
+        /// <summary>
+        /// Méthode appelée lors de l'arrivée d'un nouveau frame du corps
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="e">event arguments</param>
         private void Reader_BodyFrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
             bool dataReceived = false;
@@ -185,6 +206,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Méthode appelée pour le dessin du corps
+        /// </summary>
         private void DrawBody(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, DrawingContext drawingContext, Pen drawingPen)
         {
             // Draw the bones
@@ -216,6 +240,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Méthode appelée pour le dessin d'une main
+        /// </summary>
         private void DrawHand(HandState handState, Point handPosition, DrawingContext drawingContext)
         {
             switch (handState)
@@ -234,6 +261,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Méthode appelée pour le dessin d'un os
+        /// </summary>
         private void DrawBone(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, JointType jointType0, JointType jointType1, DrawingContext drawingContext, Pen drawingPen)
         {
             Joint joint0 = joints[jointType0];
@@ -256,6 +286,9 @@ namespace KinectConnection
             drawingContext.DrawLine(drawPen, jointPoints[jointType0], jointPoints[jointType1]);
         }
 
+        /// <summary>
+        /// Méthode appelée pour le dessin d'un joint
+        /// </summary>
         private void DrawClippedEdges(Body body, DrawingContext drawingContext)
         {
             FrameEdges clippedEdges = body.ClippedEdges;

@@ -10,7 +10,8 @@ using System.Windows.Media.Imaging;
 namespace KinectConnection
 {
     /// <summary>
-    /// The infrared image stream.
+    /// Classe représentant un flux d'image infrarouge pour la Kinect.
+    /// Étend la classe KinectStream.
     /// </summary>
     public class InfraredImageStream : KinectStream
     {
@@ -60,7 +61,7 @@ namespace KinectConnection
         private string statusText = null;
 
         /// <summary>
-        /// Gets the bitmap to display
+        /// Obtient la source d'image de la classe.
         /// </summary>
         public override ImageSource Source
         {
@@ -71,26 +72,8 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Execute shutdown tasks
+        /// Initialise une nouvelle instance de la classe InfraredImageStream.
         /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
-        private void MainWindow_Closing(object sender, CancelEventArgs e)
-        {
-            if (this.infraredFrameReader != null)
-            {
-                // InfraredFrameReader is IDisposable
-                this.infraredFrameReader.Dispose();
-                this.infraredFrameReader = null;
-            }
-
-            if (this.kinectSensor != null)
-            {
-                this.kinectSensor.Close();
-                this.kinectSensor = null;
-            }
-        }
-
         public InfraredImageStream()
         {
             // get FrameDescription from InfraredFrameSource
@@ -100,6 +83,9 @@ namespace KinectConnection
             this.infraredBitmap = new WriteableBitmap(this.infraredFrameDescription.Width, this.infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
         }
 
+        /// <summary>
+        /// Démarre la lecture du flux infrarouge.
+        /// </summary>
         public override void Start()
         {
             if (this.KinectSensor != null)
@@ -115,6 +101,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Arrête la lecture du flux infrarouge.
+        /// </summary>
         public override void Stop()
         {
             if (this.infraredFrameReader != null)
@@ -129,7 +118,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Handles the infrared frame data arriving from the sensor
+        /// Méthode appelée lors de l'arrivée d'un nouveau frame infrarouge.
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
@@ -156,13 +145,13 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Directly accesses the underlying image buffer of the InfraredFrame to 
-        /// create a displayable bitmap.
-        /// This function requires the /unsafe compiler option as we make use of direct
-        /// access to the native memory pointed to by the infraredFrameData pointer.
+        /// Accède directement au tampon d'image sous-jacent du InfraredFrame pour 
+        /// créer une bitmap affichable.
+        /// Cette fonction nécessite l'option /unsafe du compilateur car nous utilisons un accès direct
+        /// à la mémoire native pointée par le pointeur infraredFrameData.
         /// </summary>
-        /// <param name="infraredFrameData">Pointer to the InfraredFrame image data</param>
-        /// <param name="infraredFrameDataSize">Size of the InfraredFrame image data</param>
+        /// <param name="infraredFrameData">Pointeur vers les données d'image InfraredFrame</param>
+        /// <param name="infraredFrameDataSize">Taille des données d'image InfraredFrame</param>
         private unsafe void ProcessInfraredFrameData(IntPtr infraredFrameData, uint infraredFrameDataSize)
         {
             // infrared frame data is a 16 bit value

@@ -7,7 +7,8 @@ using System.Windows.Media.Imaging;
 namespace KinectConnection
 {
     /// <summary>
-    /// The color image stream.
+    /// Classe représentant un flux d'image coloré pour la Kinect.
+    /// Étend la classe KinectStream.
     /// </summary>
     public class ColorImageStream : KinectStream
     {
@@ -16,6 +17,9 @@ namespace KinectConnection
         /// </summary>
         private WriteableBitmap bitmap = null;
 
+        /// <summary>
+        /// Obtient la source d'image de la classe.
+        /// </summary>
         public override ImageSource Source
         {
             get { return this.bitmap; }
@@ -26,6 +30,9 @@ namespace KinectConnection
         /// </summary>
         private ColorFrameReader reader;
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe ColorImageStream.
+        /// </summary>
         public ColorImageStream() : base()
         {
             // create the colorFrameDescription from the ColorFrameSource using rgba format
@@ -35,6 +42,9 @@ namespace KinectConnection
 
         }
 
+        /// <summary>
+        /// Démarre la lecture du flux coloré.
+        /// </summary>
         public override void Start()
         {
             if (this.KinectSensor != null)
@@ -48,6 +58,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Arrête la lecture du flux coloré.
+        /// </summary>
         public override void Stop()
         {
             if (this.reader != null)
@@ -62,8 +75,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// METHOD FROM THE SAMPLE
-        /// Handles the color frame data arriving from the sensor.
+        /// Méthode appelée lors de l'arrivée d'un nouveau frame coloré.
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>

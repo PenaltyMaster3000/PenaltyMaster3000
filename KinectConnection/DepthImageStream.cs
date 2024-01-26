@@ -10,12 +10,13 @@ using System.Windows.Media.Imaging;
 namespace KinectConnection
 {
     /// <summary>
-    /// The depth image stream.
+    /// Classe représentant un flux d'image de profondeur pour la Kinect.
+    /// Étend la classe KinectStream.
     /// </summary>
     public class DepthImageStream : KinectStream
     {
         /// <summary>
-        /// Map depth range to byte range
+        /// Constante pour mapper la plage de profondeur à la plage de byte.
         /// </summary>
         private const int MapDepthToByte = 8000 / 256;
 
@@ -45,7 +46,7 @@ namespace KinectConnection
         private byte[] depthPixels = null;
 
         /// <summary>
-        /// Gets the bitmap to display
+        /// Obtient la source d'image de la classe.
         /// </summary>
         public override ImageSource Source
         {
@@ -55,6 +56,24 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe DepthImageStream.
+        /// </summary>
+        public DepthImageStream() : base()
+        {
+            // get FrameDescription from DepthFrameSource
+            this.depthFrameDescription = this.KinectSensor.DepthFrameSource.FrameDescription;
+
+            // allocate space to put the pixels being received and converted
+            this.depthPixels = new byte[this.depthFrameDescription.Width * this.depthFrameDescription.Height];
+
+            // create the bitmap to display
+            this.depthBitmap = new WriteableBitmap(this.depthFrameDescription.Width, this.depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
+        }
+
+        /// <summary>
+        /// Démarre la lecture du flux de profondeur.
+        /// </summary>
         public override void Start()
         {
             if (this.KinectSensor != null)
@@ -70,6 +89,9 @@ namespace KinectConnection
             }
         }
 
+        /// <summary>
+        /// Arrête la lecture du flux de profondeur.
+        /// </summary>
         public override void Stop()
         {
             if (this.depthFrameReader != null)
@@ -83,20 +105,8 @@ namespace KinectConnection
             }
         }
 
-        public DepthImageStream() : base()
-        {
-            // get FrameDescription from DepthFrameSource
-            this.depthFrameDescription = this.KinectSensor.DepthFrameSource.FrameDescription;
-
-            // allocate space to put the pixels being received and converted
-            this.depthPixels = new byte[this.depthFrameDescription.Width * this.depthFrameDescription.Height];
-
-            // create the bitmap to display
-            this.depthBitmap = new WriteableBitmap(this.depthFrameDescription.Width, this.depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
-        }
-
         /// <summary>
-        /// Handles the depth frame data arriving from the sensor
+        /// Méthode appelée lors de l'arrivée d'un nouveau frame de profondeur.
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
@@ -137,15 +147,15 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Directly accesses the underlying image buffer of the DepthFrame to 
-        /// create a displayable bitmap.
-        /// This function requires the /unsafe compiler option as we make use of direct
-        /// access to the native memory pointed to by the depthFrameData pointer.
+        /// Accède directement au tampon d'image sous-jacent du DepthFrame
+        /// pour créer une bitmap affichable.
+        /// Cette méthode nécessite l'option du compilateur "/unsafe" pour avoir directement accès
+        /// à la mémoire native pointée par le pointer depthFrameData.
         /// </summary>
-        /// <param name="depthFrameData">Pointer to the DepthFrame image data</param>
-        /// <param name="depthFrameDataSize">Size of the DepthFrame image data</param>
-        /// <param name="minDepth">The minimum reliable depth value for the frame</param>
-        /// <param name="maxDepth">The maximum reliable depth value for the frame</param>
+        /// <param name="depthFrameData">Pointeur vers la DepthFrame image data</param>
+        /// <param name="depthFrameDataSize">Taille de la DepthFrame image data</param>
+        /// <param name="minDepth">La plus fiable valeur minimale pour la frame</param>
+        /// <param name="maxDepth">La plus fiable valeur maximale pour la frame</param>
         private unsafe void ProcessDepthFrameData(IntPtr depthFrameData, uint depthFrameDataSize, ushort minDepth, ushort maxDepth)
         {
             // depth frame data is a 16 bit value
@@ -164,7 +174,7 @@ namespace KinectConnection
         }
 
         /// <summary>
-        /// Renders color pixels into the writeableBitmap.
+        /// Rend les pixels de profondeur dans la bitmap.
         /// </summary>
         private void RenderDepthPixels()
         {
