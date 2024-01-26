@@ -14,17 +14,6 @@ namespace KinectConnection
 {
     public class BodyImageStream : KinectStream
     {
-        /// <summary>
-        /// The writeable bitmap.
-        /// </summary>
-        private WriteableBitmap bitmap = null;
-
-        // so that we can bind to it in the MainWindow.xaml
-        public WriteableBitmap Bitmap
-        {
-            get { return this.bitmap; }
-        }
-
         private BodyFrameReader bodyFrameReader = null;
         private Body[] bodies = null;
         private DrawingGroup drawingGroup = new DrawingGroup();
@@ -103,8 +92,6 @@ namespace KinectConnection
 
         public override void Start()
         {
-            this.bitmap = new WriteableBitmap(1920, 1080, 96.0, 96.0, PixelFormats.Pbgra32, null);
-
             if (this.KinectSensor != null)
             {
                 this.bodyFrameReader = this.KinectSensor.BodyFrameSource.OpenReader();
@@ -118,7 +105,15 @@ namespace KinectConnection
 
         public override void Stop()
         {
-            throw new NotImplementedException();
+            if (this.bodyFrameReader != null)
+            {
+                this.bodyFrameReader.FrameArrived -= this.Reader_BodyFrameArrived;
+
+                // Dispose the reader to free resources.
+                // If we don't dispose manualy, the gc will do it for us, but we don't know when.
+                this.bodyFrameReader.Dispose();
+                this.bodyFrameReader = null;
+            }
         }
 
         private void Reader_BodyFrameArrived(object sender, BodyFrameArrivedEventArgs e)

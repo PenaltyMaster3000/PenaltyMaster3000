@@ -70,7 +70,8 @@
             <Button Content="Depth"
                     Width="100"
                     Height="30"
-                    Grid.Column="3">
+                    Grid.Column="3"
+                    Command="{Binding DepthCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -80,7 +81,8 @@
             <Button Content="Infrared"
                     Width="100"
                     Height="30"
-                    Grid.Column="5">
+                    Grid.Column="5"
+                    Command="{Binding IRCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -90,7 +92,8 @@
             <Button Content="Body"
                     Width="100"
                     Height="30"
-                    Grid.Column="7">
+                    Grid.Column="7"
+                    Command="{Binding BodyCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>

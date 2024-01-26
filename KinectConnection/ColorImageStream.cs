@@ -28,20 +28,24 @@ namespace KinectConnection
 
         public ColorImageStream() : base()
         {
-
-        }
-
-        public override void Start()
-        {
             // create the colorFrameDescription from the ColorFrameSource using rgba format
             // the dimensions of the bitmap => match the dimensions of the color frame from the Kinect sensor.
             FrameDescription colorFrameDescription = this.KinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
             this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
 
-            // open the reader for the color frames
-            this.reader = this.KinectSensor.ColorFrameSource.OpenReader();
-            // subscribe to the event
-            this.reader.FrameArrived += this.Reader_ColorFrameArrived;
+        }
+
+        public override void Start()
+        {
+            if (this.KinectSensor != null)
+            {
+                this.reader = this.KinectSensor.ColorFrameSource.OpenReader();
+
+                if (this.reader != null)
+                {
+                    this.reader.FrameArrived += this.Reader_ColorFrameArrived;
+                }
+            }
         }
 
         public override void Stop()

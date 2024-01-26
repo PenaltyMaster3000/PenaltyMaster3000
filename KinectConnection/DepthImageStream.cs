@@ -57,15 +57,6 @@ namespace KinectConnection
 
         public override void Start()
         {
-            // get FrameDescription from DepthFrameSource
-            this.depthFrameDescription = this.KinectSensor.DepthFrameSource.FrameDescription;
-
-            // allocate space to put the pixels being received and converted
-            this.depthPixels = new byte[this.depthFrameDescription.Width * this.depthFrameDescription.Height];
-
-            // create the bitmap to display
-            this.depthBitmap = new WriteableBitmap(this.depthFrameDescription.Width, this.depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
-
             if (this.KinectSensor != null)
             {
                 // open the reader for the depth frames
@@ -81,7 +72,27 @@ namespace KinectConnection
 
         public override void Stop()
         {
-            throw new NotImplementedException();
+            if (this.depthFrameReader != null)
+            {
+                this.depthFrameReader.FrameArrived -= this.Reader_FrameArrived;
+
+                // Dispose the reader to free resources.
+                // If we don't dispose manualy, the gc will do it for us, but we don't know when.
+                this.depthFrameReader.Dispose();
+                this.depthFrameReader = null;
+            }
+        }
+
+        public DepthImageStream() : base()
+        {
+            // get FrameDescription from DepthFrameSource
+            this.depthFrameDescription = this.KinectSensor.DepthFrameSource.FrameDescription;
+
+            // allocate space to put the pixels being received and converted
+            this.depthPixels = new byte[this.depthFrameDescription.Width * this.depthFrameDescription.Height];
+
+            // create the bitmap to display
+            this.depthBitmap = new WriteableBitmap(this.depthFrameDescription.Width, this.depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
         }
 
         /// <summary>

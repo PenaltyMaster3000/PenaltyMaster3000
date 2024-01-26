@@ -95,13 +95,13 @@ namespace KinectConnection
         {
             // get FrameDescription from InfraredFrameSource
             this.infraredFrameDescription = this.KinectSensor.InfraredFrameSource.FrameDescription;
+
+            // create the bitmap to display
+            this.infraredBitmap = new WriteableBitmap(this.infraredFrameDescription.Width, this.infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
         }
 
         public override void Start()
         {
-            // create the bitmap to display
-            this.infraredBitmap = new WriteableBitmap(this.infraredFrameDescription.Width, this.infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
-
             if (this.KinectSensor != null)
             {
                 // open the reader for the depth frames
@@ -117,7 +117,15 @@ namespace KinectConnection
 
         public override void Stop()
         {
-            throw new NotImplementedException();
+            if (this.infraredFrameReader != null)
+            {
+                this.infraredFrameReader.FrameArrived -= this.Reader_InfraredFrameArrived;
+
+                // Dispose the reader to free resources.
+                // If we don't dispose manualy, the gc will do it for us, but we don't know when.
+                this.infraredFrameReader.Dispose();
+                this.infraredFrameReader = null;
+            }
         }
 
         /// <summary>

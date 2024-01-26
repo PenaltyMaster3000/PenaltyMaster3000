@@ -19,6 +19,9 @@ namespace KinectSensorStreams.ViewModel
         public ICommand StartCommand { get; set; }
 
         public ICommand ColorCommand { get; set; }
+        public ICommand BodyCommand { get; set; }
+        public ICommand IRCommand { get; set; }
+        public ICommand DepthCommand { get; set; }
 
         /// <summary>
         /// Propriété liée à l'objet KinectManager
@@ -55,12 +58,13 @@ namespace KinectSensorStreams.ViewModel
 
             // factory
             KinectStreamsFactory = new KinectStreamsFactory(new KinectManager());
-            // kinect stream => color stream for now
-            KinectStream = KinectStreamsFactory[KinectStreams.Depth];
-
+            
             StartCommand = new RelayCommand(Start);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
             ColorCommand = new RelayCommand(Color);
+            BodyCommand = new RelayCommand(Body);
+            IRCommand = new RelayCommand(IR);
+            DepthCommand = new RelayCommand(Depth);
         }
 
         #endregion
@@ -77,12 +81,47 @@ namespace KinectSensorStreams.ViewModel
             // Start the kinect sensor
             //KinectStream.KinectManager.StartSensor();
             // Start the color stream reader
-            KinectStream.Start();
+            //KinectStream.Start();
         }
 
         private void Color()
         {
-            //KinectStream.Start();
+            if(KinectStream != null)
+            {
+                KinectStream.Stop();
+            }
+            KinectStream = KinectStreamsFactory[KinectStreams.Color];
+            KinectStream.Start();
+        }
+
+        private void Body()
+        {
+            if (KinectStream != null)
+            {
+                KinectStream.Stop();
+            }
+            KinectStream = KinectStreamsFactory[KinectStreams.Body];
+            KinectStream.Start();
+        }
+
+        private void IR()
+        {
+            if (KinectStream != null)
+            {
+                KinectStream.Stop();
+            }
+            KinectStream = KinectStreamsFactory[KinectStreams.IR];
+            KinectStream.Start();
+        }
+
+        private void Depth()
+        {
+            if (KinectStream != null)
+            {
+                KinectStream.Stop();
+            }
+            KinectStream = KinectStreamsFactory[KinectStreams.Depth];
+            KinectStream.Start();
         }
 
         #endregion
