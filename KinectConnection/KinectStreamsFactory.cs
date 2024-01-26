@@ -21,6 +21,8 @@ namespace KinectConnection
         {
             { KinectStreams.Color, () => new ColorImageStream() },
             { KinectStreams.Body, () => new BodyImageStream() },
+            { KinectStreams.IR, () => new InfraredImageStream() },
+            { KinectStreams.Depth, () => new DepthImageStream() },
             // Other streams ...
         };
         }

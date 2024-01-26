@@ -56,7 +56,7 @@ namespace KinectSensorStreams.ViewModel
             // factory
             KinectStreamsFactory = new KinectStreamsFactory(new KinectManager());
             // kinect stream => color stream for now
-            KinectStream = KinectStreamsFactory[KinectStreams.Body];
+            KinectStream = KinectStreamsFactory[KinectStreams.Depth];
 
             StartCommand = new RelayCommand(Start);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
