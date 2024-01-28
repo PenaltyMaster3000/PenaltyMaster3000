@@ -18,25 +18,74 @@ namespace KinectConnection
     /// </summary>
     public class BodyImageStream : KinectStream
     {
+        // Le lecteur pour les données enoyées par le Kinect
         private BodyFrameReader bodyFrameReader = null;
-        private Body[] bodies = null;
+
+        // DrawingGroup est une classe qui nous permet de créer et manipuler un groupe de dessins comme un seul objet.
+        // Nous l'utiliserons pour dessiner le corps.
         private DrawingGroup drawingGroup = new DrawingGroup();
-        private List<Pen> bodyColors = new List<Pen>();
+
+        // Convertit les coordonnées 3D "vues" par le kinect en coordonnées 2D
+        // -que nous pouvons utiliser pour dessiner le bodyStream
         private CoordinateMapper coordinateMapper = null;
+
+        /// <summary>
+        /// Paramètres et attributs du corps.
+        /// </summary>
+        // Liste de corps.
+        private Body[] bodies = null;
+
+        // Liste de tuples, avec les paires de joints.
         private List<Tuple<JointType, JointType>> bones = new List<Tuple<JointType, JointType>>();
-        private readonly Brush trackedJointBrush = new SolidColorBrush(Color.FromArgb(255, 68, 192, 68));
-        private readonly Brush inferredJointBrush = Brushes.Yellow;
+
+        // Taille de la main
         private const double HandSize = 30;
+
+        // Épaisseur de l'articulation
         private const double JointThickness = 3;
-        private readonly Brush handClosedBrush = new SolidColorBrush(Color.FromArgb(128, 255, 0, 0));
-        private readonly Brush handOpenBrush = new SolidColorBrush(Color.FromArgb(128, 0, 255, 0));
-        private readonly Brush handLassoBrush = new SolidColorBrush(Color.FromArgb(128, 0, 0, 255));
-        private readonly Pen inferredBonePen = new Pen(Brushes.Gray, 1);
+
+        // Épaisseur de la frontière utilisée pour couper les données du corps
         private const double ClipBoundsThickness = 10;
+
+        /// <summary>
+        /// Paramètres et attributs de l'image.
+        /// </summary>
+
+        // DrawingImage est une classe fille de ImageSource qu'on utilisera
+        // -pour afficher le DrawingGroup du corps qu'on aura dessiné
         private DrawingImage imageSource = new DrawingImage();
+
+        // Contient des informations telles que la largeur, la hauteur et le format des pixels.
         private FrameDescription frameDescription;
+
+        // displayHeight est la hauteur de la zone d'affichage. Elle est définie en fonction de la hauteur décrite dans frameDescription.
         private int displayHeight;
+
+        // displayWidth est la largeur de la zone d'affichage. Elle est définie en fonction de la largeur décrite dans frameDescription.
         private int displayWidth;
+
+        /// <summary>
+        /// Paramètres et attributs pour les couleurs.
+        /// </summary>
+        private List<Pen> bodyColors = new List<Pen>();
+
+        // Couleur de l'articulation suivie
+        private readonly Brush trackedJointBrush = new SolidColorBrush(Color.FromArgb(255, 68, 192, 68));
+
+        // Couleur de l'articulation inférée
+        private readonly Brush inferredJointBrush = Brushes.Yellow;
+
+        // Couleur de la main fermée
+        private readonly Brush handClosedBrush = new SolidColorBrush(Color.FromArgb(128, 255, 0, 0));
+
+        // Couleur de la main ouverte
+        private readonly Brush handOpenBrush = new SolidColorBrush(Color.FromArgb(128, 0, 255, 0));
+
+        // Couleur de la main en lasso
+        private readonly Brush handLassoBrush = new SolidColorBrush(Color.FromArgb(128, 0, 0, 255));
+
+        // Couleur de l'os inféré
+        private readonly Pen inferredBonePen = new Pen(Brushes.Gray, 1);
 
         /// <summary>
         /// Obtient la source d'image de la classe.

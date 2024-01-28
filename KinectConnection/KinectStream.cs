@@ -14,6 +14,7 @@ namespace KinectConnection
         
         public KinectManager KinectManager { get; set; }
 
+        // Abstraction pour le writeable bitmap et drawing image
         public abstract ImageSource Source { get; }
 
         public abstract void Start();

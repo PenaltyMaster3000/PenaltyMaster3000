@@ -130,9 +130,6 @@ namespace KinectConnection
                             // we are setting maxDepth to the extreme potential depth threshold
                             ushort maxDepth = ushort.MaxValue;
 
-                            // If you wish to filter by reliable depth distance, uncomment the following line:
-                            //// maxDepth = depthFrame.DepthMaxReliableDistance
-
                             this.ProcessDepthFrameData(depthBuffer.UnderlyingBuffer, depthBuffer.Size, depthFrame.DepthMinReliableDistance, maxDepth);
                             depthFrameProcessed = true;
                         }
