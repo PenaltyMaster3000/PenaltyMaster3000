@@ -101,11 +101,12 @@ namespace KinectConnection
         public BodyImageStream() : base()
         {
             this.coordinateMapper = this.KinectSensor.CoordinateMapper;
+
             frameDescription = this.KinectSensor.DepthFrameSource.FrameDescription;
             displayHeight = frameDescription.Height;
             displayWidth = frameDescription.Width;
 
-            // Torso
+            // Torse
             this.bones.Add(new Tuple<JointType, JointType>(JointType.Head, JointType.Neck));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.Neck, JointType.SpineShoulder));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.SpineMid));
@@ -115,30 +116,31 @@ namespace KinectConnection
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipLeft));
 
-            // Right Arm
+            // Bras droit 
             this.bones.Add(new Tuple<JointType, JointType>(JointType.ShoulderRight, JointType.ElbowRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.ElbowRight, JointType.WristRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.WristRight, JointType.HandRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HandRight, JointType.HandTipRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.WristRight, JointType.ThumbRight));
 
-            // Left Arm
+            // Bras gauche
             this.bones.Add(new Tuple<JointType, JointType>(JointType.ShoulderLeft, JointType.ElbowLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.ElbowLeft, JointType.WristLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.WristLeft, JointType.HandLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HandLeft, JointType.HandTipLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.WristLeft, JointType.ThumbLeft));
 
-            // Right Leg
+            // Jambe droite
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HipRight, JointType.KneeRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeRight, JointType.AnkleRight));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleRight, JointType.FootRight));
 
-            // Left Leg
+            // Jambe gauche
             this.bones.Add(new Tuple<JointType, JointType>(JointType.HipLeft, JointType.KneeLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeLeft, JointType.AnkleLeft));
             this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleLeft, JointType.FootLeft));
 
+            // Couleurs
             this.bodyColors.Add(new Pen(Brushes.Red, 6));
             this.bodyColors.Add(new Pen(Brushes.Orange, 6));
             this.bodyColors.Add(new Pen(Brushes.Green, 6));
@@ -188,6 +190,7 @@ namespace KinectConnection
         /// <param name="e">event arguments</param>
         private void Reader_BodyFrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
+            // flag pour savoir si la donnée est reçu ou pas
             bool dataReceived = false;
 
             using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
@@ -196,27 +199,32 @@ namespace KinectConnection
                 {
                     if (this.bodies == null)
                     {
+                        // ajouter des corps en fonction du bodyCount
                         this.bodies = new Body[bodyFrame.BodyCount];
                     }
 
-                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
-                    // As long as those body objects are not disposed and not set to null in the array,
-                    // those body objects will be re-used.
+                    // Une fois que GetAndRefreshBodyData est appele le Kinect va allouer chaque body dans le tableau
+                    // Tant que le body est toujours dans le cadre il ne sera pas supprimé donc les body deja alloues
+                    // seront réutilisé
                     bodyFrame.GetAndRefreshBodyData(this.bodies);
+
+                    // flag
                     dataReceived = true;
                 }
             }
 
+            // Si on reçoit de la donnée, alors dessiner le body
             if (dataReceived)
             {
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
-                    // Draw a transparent background to set the render size
+                    // Fond transparent
                     dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, displayWidth, displayHeight));
 
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
                     {
+                        // pour avoir des couleurs differentes pour chaque body
                         Pen drawPen = this.bodyColors[penIndex++];
 
                         if (body.IsTracked)
@@ -230,8 +238,8 @@ namespace KinectConnection
 
                             foreach (JointType jointType in joints.Keys)
                             {
-                                // sometimes the depth(Z) of an inferred joint may show as negative
-                                // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
+                                // parfois la profondeur Z peut venir negatif
+                                // avec 0.1 on evite les coordonées negatives du coordinateMapper
                                 CameraSpacePoint position = joints[jointType].Position;
                                 if (position.Z < 0)
                                 {
@@ -242,14 +250,16 @@ namespace KinectConnection
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                             }
 
+                            // dessiner les joints
                             this.DrawBody(joints, jointPoints, dc, drawPen);
 
+                            // dessiner les mains
                             this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                     }
 
-                    // prevent drawing outside of our render area
+                    // empeche de dessiner hors du cadre
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, displayWidth, displayHeight));
                 }
             }
@@ -260,13 +270,13 @@ namespace KinectConnection
         /// </summary>
         private void DrawBody(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, DrawingContext drawingContext, Pen drawingPen)
         {
-            // Draw the bones
+            // Dessiner les os (lignes entre les joints)
             foreach (var bone in this.bones)
             {
                 this.DrawBone(joints, jointPoints, bone.Item1, bone.Item2, drawingContext, drawingPen);
             }
 
-            // Draw the joints
+            // Dessiner les joints
             foreach (JointType jointType in joints.Keys)
             {
                 Brush drawBrush = null;
@@ -318,14 +328,13 @@ namespace KinectConnection
             Joint joint0 = joints[jointType0];
             Joint joint1 = joints[jointType1];
 
-            // If we can't find either of these joints, exit
+            // Si ces joints n'existent pas, return (pas besoin de dessiner)
             if (joint0.TrackingState == TrackingState.NotTracked ||
             joint1.TrackingState == TrackingState.NotTracked)
             {
                 return;
             }
 
-            // We assume all drawn bones are inferred unless BOTH joints are tracked
             Pen drawPen = this.inferredBonePen;
             if ((joint0.TrackingState == TrackingState.Tracked) && (joint1.TrackingState == TrackingState.Tracked))
             {

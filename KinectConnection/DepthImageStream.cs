@@ -21,27 +21,22 @@ namespace KinectConnection
         private const int MapDepthToByte = 8000 / 256;
 
         /// <summary>
-        /// Active Kinect sensor
-        /// </summary>
-        private KinectSensor kinectSensor = null;
-
-        /// <summary>
-        /// Reader for depth frames
+        /// Reader pour les données
         /// </summary>
         private DepthFrameReader depthFrameReader = null;
 
         /// <summary>
-        /// Description of the data contained in the depth frame
+        /// Description du cadre (hauteur/largeur)
         /// </summary>
         private FrameDescription depthFrameDescription = null;
 
         /// <summary>
-        /// Bitmap to display
+        /// Le bitmap permettant d'afficher l'image
         /// </summary>
         private WriteableBitmap depthBitmap = null;
 
         /// <summary>
-        /// Intermediate storage for frame data converted to color
+        /// Stockage intermediare des données avant de convertir en couleurs
         /// </summary>
         private byte[] depthPixels = null;
 
@@ -155,17 +150,17 @@ namespace KinectConnection
         /// <param name="maxDepth">La plus fiable valeur maximale pour la frame</param>
         private unsafe void ProcessDepthFrameData(IntPtr depthFrameData, uint depthFrameDataSize, ushort minDepth, ushort maxDepth)
         {
-            // depth frame data is a 16 bit value
+            // la donnée du dephtFrame est une valeur de 16 bits
             ushort* frameData = (ushort*)depthFrameData;
 
-            // convert depth to a visual representation
+            // traduit la profondeur en une representation visuelle
             for (int i = 0; i < (int)(depthFrameDataSize / this.depthFrameDescription.BytesPerPixel); ++i)
             {
-                // Get the depth for this pixel
+                // obtenir la profondeur d'un pixel
                 ushort depth = frameData[i];
 
-                // To convert to a byte, we're mapping the depth value to the byte range.
-                // Values outside the reliable depth range are mapped to 0 (black).
+                // Pour convertir en bytes on doit traduire la profondeur en bytes
+                // Des valeurs qui n'est pas dans la portée valide on met 0 
                 this.depthPixels[i] = (byte)(depth >= minDepth && depth <= maxDepth ? (depth / MapDepthToByte) : 0);
             }
         }

@@ -16,47 +16,47 @@ namespace KinectConnection
     public class InfraredImageStream : KinectStream
     {
         /// <summary>
-        /// Maximum value (as a float) that can be returned by the InfraredFrame
+        /// Valeur maximale (en tant que float) que peut renvoyer InfraredFrame.
         /// </summary>
         private const float InfraredSourceValueMaximum = (float)ushort.MaxValue;
 
         /// <summary>
-        /// The value by which the infrared source data will be scaled
+        /// La valeur par laquelle les données de la source infrarouge seront ajustées.
         /// </summary>
         private const float InfraredSourceScale = 0.75f;
 
         /// <summary>
-        /// Smallest value to display when the infrared data is normalized
+        /// Plus petite valeur à afficher lorsque les données infrarouges sont normalisées.
         /// </summary>
         private const float InfraredOutputValueMinimum = 0.01f;
 
         /// <summary>
-        /// Largest value to display when the infrared data is normalized
+        /// Plus grande valeur à afficher lorsque les données infrarouges sont normalisées.
         /// </summary>
         private const float InfraredOutputValueMaximum = 1.0f;
 
         /// <summary>
-        /// Active Kinect sensor
+        /// Capteur Kinect actif.
         /// </summary>
         private KinectSensor kinectSensor = null;
 
         /// <summary>
-        /// Reader for infrared frames
+        /// Lecteur pour les images infrarouges.
         /// </summary>
         private InfraredFrameReader infraredFrameReader = null;
 
         /// <summary>
-        /// Description (width, height, etc) of the infrared frame data
+        /// Description (largeur, hauteur, etc.) des données du cadre infrarouge.
         /// </summary>
         private FrameDescription infraredFrameDescription = null;
 
         /// <summary>
-        /// Bitmap to display
+        /// Bitmap à afficher.
         /// </summary>
         private WriteableBitmap infraredBitmap = null;
 
         /// <summary>
-        /// Current status text to display
+        /// Texte d'état actuel à afficher.
         /// </summary>
         private string statusText = null;
 
@@ -76,10 +76,10 @@ namespace KinectConnection
         /// </summary>
         public InfraredImageStream()
         {
-            // get FrameDescription from InfraredFrameSource
+            // Obtient la description du cadre infrarouge à partir de InfraredFrameSource
             this.infraredFrameDescription = this.KinectSensor.InfraredFrameSource.FrameDescription;
 
-            // create the bitmap to display
+            // Crée la bitmap à afficher
             this.infraredBitmap = new WriteableBitmap(this.infraredFrameDescription.Width, this.infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
         }
 
@@ -90,12 +90,12 @@ namespace KinectConnection
         {
             if (this.KinectSensor != null)
             {
-                // open the reader for the depth frames
+                // Ouvre le lecteur pour les trames infrarouges
                 this.infraredFrameReader = this.KinectSensor.InfraredFrameSource.OpenReader();
 
                 if (this.infraredFrameReader != null)
                 {
-                    // wire handler for frame arrival
+                    // Lie le gestionnaire pour l'arrivée de la trame
                     this.infraredFrameReader.FrameArrived += this.Reader_InfraredFrameArrived;
                 }
             }
@@ -110,30 +110,30 @@ namespace KinectConnection
             {
                 this.infraredFrameReader.FrameArrived -= this.Reader_InfraredFrameArrived;
 
-                // Dispose the reader to free resources.
-                // If we don't dispose manualy, the gc will do it for us, but we don't know when.
+                // Libère le lecteur pour libérer des ressources.
+                // Si nous ne le faisons pas manuellement, le GC le fera pour nous, mais nous ne savons pas quand.
                 this.infraredFrameReader.Dispose();
                 this.infraredFrameReader = null;
             }
         }
 
         /// <summary>
-        /// Méthode appelée lors de l'arrivée d'un nouveau frame infrarouge.
+        /// Méthode appelée lors de l'arrivée d'un nouveau cadre infrarouge.
         /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
+        /// <param name="sender">objet envoyant l'événement</param>
+        /// <param name="e">arguments de l'événement</param>
         private void Reader_InfraredFrameArrived(object sender, InfraredFrameArrivedEventArgs e)
         {
-            // InfraredFrame is IDisposable
+            // InfraredFrame est IDisposable
             using (InfraredFrame infraredFrame = e.FrameReference.AcquireFrame())
             {
                 if (infraredFrame != null)
                 {
-                    // the fastest way to process the infrared frame data is to directly access 
-                    // the underlying buffer
+                    // La manière la plus rapide de traiter les données du cadre infrarouge est d'accéder directement
+                    // au tampon sous-jacent
                     using (Microsoft.Kinect.KinectBuffer infraredBuffer = infraredFrame.LockImageBuffer())
                     {
-                        // verify data and write the new infrared frame data to the display bitmap
+                        // Vérifie les données et écrit les nouvelles données du cadre infrarouge sur la bitmap d'affichage
                         if (((this.infraredFrameDescription.Width * this.infraredFrameDescription.Height) == (infraredBuffer.Size / this.infraredFrameDescription.BytesPerPixel)) &&
                             (this.infraredFrameDescription.Width == this.infraredBitmap.PixelWidth) && (this.infraredFrameDescription.Height == this.infraredBitmap.PixelHeight))
                         {
@@ -150,31 +150,31 @@ namespace KinectConnection
         /// Cette fonction nécessite l'option /unsafe du compilateur car nous utilisons un accès direct
         /// à la mémoire native pointée par le pointeur infraredFrameData.
         /// </summary>
-        /// <param name="infraredFrameData">Pointeur vers les données d'image InfraredFrame</param>
-        /// <param name="infraredFrameDataSize">Taille des données d'image InfraredFrame</param>
+        /// <param name="infraredFrameData">Pointeur vers les données du cadre infrarouge</param>
+        /// <param name="infraredFrameDataSize">Taille des données du cadre infrarouge</param>
         private unsafe void ProcessInfraredFrameData(IntPtr infraredFrameData, uint infraredFrameDataSize)
         {
-            // infrared frame data is a 16 bit value
+            // Les données du cadre infrarouge sont une valeur de 16 bits
             ushort* frameData = (ushort*)infraredFrameData;
 
-            // lock the target bitmap
+            // Verrouille la bitmap cible
             this.infraredBitmap.Lock();
 
-            // get the pointer to the bitmap's back buffer
+            // Obtient le pointeur vers le tampon arrière de la bitmap
             float* backBuffer = (float*)this.infraredBitmap.BackBuffer;
 
-            // process the infrared data
+            // Traite les données infrarouges
             for (int i = 0; i < (int)(infraredFrameDataSize / this.infraredFrameDescription.BytesPerPixel); ++i)
             {
-                // since we are displaying the image as a normalized grey scale image, we need to convert from
-                // the ushort data (as provided by the InfraredFrame) to a value from [InfraredOutputValueMinimum, InfraredOutputValueMaximum]
+                // Comme nous affichons l'image en niveaux de gris normalisés, nous devons convertir de
+                // la donnée ushort (fournie par InfraredFrame) à une valeur de [InfraredOutputValueMinimum, InfraredOutputValueMaximum]
                 backBuffer[i] = Math.Min(InfraredOutputValueMaximum, (((float)frameData[i] / InfraredSourceValueMaximum * InfraredSourceScale) * (1.0f - InfraredOutputValueMinimum)) + InfraredOutputValueMinimum);
             }
 
-            // mark the entire bitmap as needing to be drawn
+            // Marque toute la bitmap comme nécessitant un redessin
             this.infraredBitmap.AddDirtyRect(new Int32Rect(0, 0, this.infraredBitmap.PixelWidth, this.infraredBitmap.PixelHeight));
 
-            // unlock the bitmap
+            // Déverrouille la bitmap
             this.infraredBitmap.Unlock();
         }
     }
