@@ -22,6 +22,7 @@ namespace KinectSensorStreams.ViewModel
         public ICommand BodyCommand { get; set; }
         public ICommand IRCommand { get; set; }
         public ICommand DepthCommand { get; set; }
+        public ICommand BodyColorCommand { get; set; }
 
         /// <summary>
         /// Propriété liée à l'objet KinectManager
@@ -39,6 +40,15 @@ namespace KinectSensorStreams.ViewModel
         /// The Kinect stream property.
         /// </summary>
         public KinectStream KinectStream
+        {
+            get { return kinectStream; }
+            set { SetProperty(ref kinectStream, value); }
+        }
+
+        /// <summary>
+        /// The Secondary Kinect stream property.
+        /// </summary>
+        public KinectStream KinectStream2
         {
             get { return kinectStream; }
             set { SetProperty(ref kinectStream, value); }
@@ -65,6 +75,7 @@ namespace KinectSensorStreams.ViewModel
             BodyCommand = new RelayCommand(Body);
             IRCommand = new RelayCommand(IR);
             DepthCommand = new RelayCommand(Depth);
+            BodyColorCommand = new RelayCommand(BodyColor);
         }
 
         #endregion
@@ -122,6 +133,19 @@ namespace KinectSensorStreams.ViewModel
             }
             KinectStream = KinectStreamsFactory[KinectStreams.Depth];
             KinectStream.Start();
+        }
+
+        private void BodyColor()
+        {
+            if (KinectStream != null ||KinectStream2 != null)
+            {
+                KinectStream.Stop();
+                KinectStream2.Stop();
+            }
+            KinectStream = KinectStreamsFactory[KinectStreams.Color];
+            KinectStream.Start();            
+            KinectStream2 = KinectStreamsFactory[KinectStreams.Body];
+            KinectStream2.Start();
         }
 
         #endregion

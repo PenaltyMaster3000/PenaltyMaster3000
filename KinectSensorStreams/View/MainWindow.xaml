@@ -103,7 +103,8 @@
             <Button Content="Body and color"
                     Width="100"
                     Height="30"
-                    Grid.Column="9">
+                    Grid.Column="9"
+                    Command="{Binding BodyColorCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -117,7 +118,14 @@
                      HorizontalAlignment="Center"
                      Height="400"
                      Width="400">
-                <Image Source="{Binding KinectStream.Source}"/>
+                <Image Source="{Binding KinectStream.Source}"
+                       Opacity="50"/>
+            </Viewbox>
+            <Viewbox Grid.Row="1"
+                     HorizontalAlignment="Center"
+                     Height="400"
+                     Width="400">
+                <Image Source="{Binding KinectStream2.Source}"/>
             </Viewbox>
         </Grid>
     </Grid>

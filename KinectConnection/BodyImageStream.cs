@@ -219,7 +219,7 @@ namespace KinectConnection
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
                     // Fond transparent
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, displayWidth, displayHeight));
+                    dc.DrawRectangle(Brushes.Transparent, null, new Rect(0.0, 0.0, displayWidth, displayHeight));
 
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
