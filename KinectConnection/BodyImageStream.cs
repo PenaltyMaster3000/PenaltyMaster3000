@@ -174,6 +174,8 @@ namespace KinectConnection
         {
             if (this.bodyFrameReader != null)
             {
+                // nettoyer le dessin ! 
+                this.imageSource.Drawing = null;
                 this.bodyFrameReader.FrameArrived -= this.Reader_BodyFrameArrived;
 
                 // Dispose le lecteur pour libérer les ressources.
