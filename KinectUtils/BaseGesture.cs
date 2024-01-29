@@ -13,7 +13,7 @@ namespace KinectUtils
 
         public string GestureName { get; set; }
 
-        // <GestureRecognizedEventArgs>
+        // <GestureRecognizedEventArgs> a faire nous mêmes
         public EventHandler GestureRecognized { get; set; }
 
         public abstract void TestGesture(Body body);
