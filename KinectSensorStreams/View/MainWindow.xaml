@@ -6,6 +6,7 @@
         xmlns:toolkit="clr-namespace:CommunityToolkit.Mvvm.Input;assembly=CommunityToolkit.Mvvm"
         xmlns:local="clr-namespace:KinectSensorStreams.View"
         xmlns:converter="clr-namespace:KinectSensorStreams.Converter"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -13,6 +14,17 @@
         <converter:KinectStatusToColorConverter x:Key="KinectStatusToColorConverter" />
     </Window.Resources>
 
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:CallMethodAction TargetObject="{Binding Mode=OneTime}"
+                                MethodName="Start" />
+        </b:EventTrigger>
+        <b:EventTrigger EventName="Unloaded">
+            <b:CallMethodAction TargetObject="{Binding Mode=OneTime}"
+                                MethodName="Stop" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

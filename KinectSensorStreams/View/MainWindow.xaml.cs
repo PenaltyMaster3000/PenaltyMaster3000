@@ -23,12 +23,6 @@ namespace KinectSensorStreams.View
             DataContext = MainWindowVM;
         }
 
-        public override void BeginInit()
-        {
-            base.BeginInit();
-            MainWindowVM.StartCommand.Execute(null);
-        }
-
         #endregion
     }
 }

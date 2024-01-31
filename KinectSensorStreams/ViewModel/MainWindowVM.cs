@@ -17,6 +17,7 @@ namespace KinectSensorStreams.ViewModel
         /// Propriété liée à la commande appelée au démarrage de la page principale
         /// </summary>
         public ICommand StartCommand { get; set; }
+        public ICommand StopCommand { get; set; }
 
         public ICommand ColorCommand { get; set; }
         public ICommand BodyCommand { get; set; }
@@ -70,6 +71,7 @@ namespace KinectSensorStreams.ViewModel
             KinectStreamsFactory = new KinectStreamsFactory(new KinectManager());
             
             StartCommand = new RelayCommand(Start);
+            StopCommand = new RelayCommand(Stop);
             // [Question] : StartCommand ici peut être mieux que BeginInit() dans MainWindow.xaml.cs ?
             ColorCommand = new RelayCommand(Color);
             BodyCommand = new RelayCommand(Body);
@@ -85,7 +87,7 @@ namespace KinectSensorStreams.ViewModel
         /// <summary>
         /// Méthode initialisée au lancement de la page principale pour savoir si le Kinect est disponible ou non
         /// </summary>
-        private void Start()
+        public void Start()
         {
             KinectManager.StartSensor();
             
@@ -93,6 +95,14 @@ namespace KinectSensorStreams.ViewModel
             //KinectStream.KinectManager.StartSensor();
             // Start the color stream reader
             //KinectStream.Start();
+        }
+
+        /// <summary>
+        /// Méthode initialisée à l'arrêt de la page principale pour savoir si le Kinect est disponible ou non
+        /// </summary>
+        public void Stop()
+        {
+            KinectManager.StopSensor();
         }
 
         private void Color()
