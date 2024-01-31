@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BaseGesture.cs" />
     <Compile Include="GestureManager.cs" />
+    <Compile Include="GestureRecognizedEventArgs.cs" />
     <Compile Include="IGestureFactory.cs" />
     <Compile Include="Posture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

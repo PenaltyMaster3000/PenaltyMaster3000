@@ -7,17 +7,39 @@ using Microsoft.Kinect;
 
 namespace KinectUtils
 {
+    /// <summary>
+    /// The base gesture.
+    /// </summary>
     public abstract class BaseGesture
     {
+        /// <summary>
+        /// The base gesture initializer.
+        /// </summary>
         public BaseGesture() { }
 
+        /// <summary>
+        /// The gesture name.
+        /// </summary>
         public string GestureName { get; set; }
 
-        // <GestureRecognizedEventArgs> a faire nous mêmes
-        public EventHandler GestureRecognized { get; set; }
+        /// <summary>
+        /// The gesture recognized event.
+        /// </summary>
+        public EventHandler<GestureRecognizedEventArgs> GestureRecognized { get; set; }
 
+        /// <summary>
+        /// The test gesture.
+        /// </summary>
+        /// <param name="body"></param>
         public abstract void TestGesture(Body body);
 
-        protected void OnGestureRecognized() { }
+
+        /// <summary>
+        /// The on gesture recognized method.
+        /// </summary>
+        protected void OnGestureRecognized() 
+        {
+            GestureRecognized?.Invoke(this, new GestureRecognizedEventArgs(GestureName));
+        }
     }
 }

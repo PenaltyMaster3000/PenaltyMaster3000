@@ -8,16 +8,34 @@ using Microsoft.Kinect;
 
 namespace MyGestureBank
 {
-    public class PostureHandUpRight : Posture
+    /// <summary>
+    /// The hand up right posture.
+    /// </summary>
+    public class PostureHandUpRight : Posture 
     {
+        /// <summary>
+        /// PostureHandUpRight constructor.
+        /// </summary>
+        public PostureHandUpRight()
+        {
+            GestureName = "HandUpRight";
+        }
+
+        /// <summary>
+        /// The test gesture method.
+        /// </summary>
+        /// <param name="body"></param>
         public override void TestGesture(Body body)
         {
-            throw new NotImplementedException();
+            if(TestPosture(body))
+            {
+                OnGestureRecognized();
+            }  
         }
 
         protected override bool TestPosture(Body body)
         {
-            throw new NotImplementedException();
+            return body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.ShoulderRight].Position.Y;
         }
     }
 }
