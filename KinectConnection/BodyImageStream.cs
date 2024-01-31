@@ -75,15 +75,6 @@ namespace KinectConnection
         // Couleur de l'articulation inférée
         private readonly Brush inferredJointBrush = Brushes.Yellow;
 
-        // Couleur de la main fermée
-        private readonly Brush handClosedBrush = new SolidColorBrush(Color.FromArgb(128, 255, 0, 0));
-
-        // Couleur de la main ouverte
-        private readonly Brush handOpenBrush = new SolidColorBrush(Color.FromArgb(128, 0, 255, 0));
-
-        // Couleur de la main en lasso
-        private readonly Brush handLassoBrush = new SolidColorBrush(Color.FromArgb(128, 0, 0, 255));
-
         // Couleur de l'os inféré
         private readonly Pen inferredBonePen = new Pen(Brushes.Gray, 1);
 
@@ -254,10 +245,6 @@ namespace KinectConnection
 
                             // dessiner les joints
                             this.DrawBody(joints, jointPoints, dc, drawPen);
-
-                            // dessiner les mains
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
-                            this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                     }
 
@@ -298,27 +285,6 @@ namespace KinectConnection
                 {
                     drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Méthode appelée pour le dessin d'une main
-        /// </summary>
-        private void DrawHand(HandState handState, Point handPosition, DrawingContext drawingContext)
-        {
-            switch (handState)
-            {
-                case HandState.Closed:
-                    drawingContext.DrawEllipse(this.handClosedBrush, null, handPosition, HandSize, HandSize);
-                    break;
-
-                case HandState.Open:
-                    drawingContext.DrawEllipse(this.handOpenBrush, null, handPosition, HandSize, HandSize);
-                    break;
-
-                case HandState.Lasso:
-                    drawingContext.DrawEllipse(this.handLassoBrush, null, handPosition, HandSize, HandSize);
-                    break;
             }
         }
 
