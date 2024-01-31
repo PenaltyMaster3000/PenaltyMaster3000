@@ -56,11 +56,6 @@ namespace KinectConnection
         private WriteableBitmap infraredBitmap = null;
 
         /// <summary>
-        /// Texte d'état actuel à afficher.
-        /// </summary>
-        private string statusText = null;
-
-        /// <summary>
         /// Obtient la source d'image de la classe.
         /// </summary>
         public override ImageSource Source

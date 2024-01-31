@@ -118,8 +118,7 @@
                      HorizontalAlignment="Center"
                      Height="400"
                      Width="400">
-                <Image Source="{Binding KinectStream.Source}"
-                       Opacity="50"/>
+                <Image Source="{Binding KinectStream.Source}"/>
             </Viewbox>
             <Viewbox Grid.Row="1"
                      HorizontalAlignment="Center"

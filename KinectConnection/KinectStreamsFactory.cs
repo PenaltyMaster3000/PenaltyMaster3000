@@ -15,6 +15,7 @@ namespace KinectConnection
         /// </summary>
         private Dictionary<KinectStreams, Func<KinectStream>> streamFactory;
 
+        //à commenter
         public KinectStreamsFactory(KinectManager kinect)
         {
             streamFactory = new Dictionary<KinectStreams, Func<KinectStream>>
