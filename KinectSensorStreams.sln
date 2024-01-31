@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectUtils", "KinectUtils\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGestureBank", "MyGestureBank\MyGestureBank.csproj", "{D70B7357-6FF8-4F35-A283-8DB4217C0C85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostureTester", "PostureTester\PostureTester.csproj", "{7C427E13-E012-4C29-97ED-1792BA40F063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

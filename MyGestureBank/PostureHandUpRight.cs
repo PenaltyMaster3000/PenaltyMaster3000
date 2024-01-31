@@ -33,6 +33,11 @@ namespace MyGestureBank
             }  
         }
 
+        /// <summary>
+        /// Tests the posture.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>A boolean indicating wheter the posture was detected or not.</returns>
         protected override bool TestPosture(Body body)
         {
             return body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.ShoulderRight].Position.Y;
