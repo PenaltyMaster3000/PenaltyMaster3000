@@ -8,8 +8,51 @@
         Title="MainView" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/goal_background.jpeg" 
+            <ImageBrush ImageSource="/Images/goal_background.jpg" 
                         Stretch="UniformToFill"/>
         </Grid.Background>
+
+        <Grid Margin="110,101,128,59">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="/Images/goalkeeper_top_right.png"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Visibility="Hidden"/>
+            <Image Source="/Images/goalkeeper_top_middle.png"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Visibility="Hidden"/>
+            <Image Source="/Images/goalkeeper_top_left.png"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="2"
+                   Visibility="Hidden"/>
+            <Image Source="/Images/goalkeeper_down_right.png"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Visibility="Hidden"/>
+            <Image Source="{Binding CurrentImageSource}"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"/>
+            <Image Source="/Images/goalkeeper_down_left.png"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="2"
+                   Visibility="Hidden"/>
+        </Grid>
+
     </Grid>
 </Window>

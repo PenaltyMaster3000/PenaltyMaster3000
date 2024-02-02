@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PenaltyMaster3000.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,13 @@ namespace PenaltyMaster3000.View
     /// </summary>
     public partial class MainView : Window
     {
+        public MainVM MainVM { get; set; }
+
         public MainView()
         {
+            MainVM = new MainVM();
             InitializeComponent();
+            DataContext = MainVM;
         }
     }
 }
