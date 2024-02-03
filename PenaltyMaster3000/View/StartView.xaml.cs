@@ -1,4 +1,5 @@
-﻿using PenaltyMaster3000.ViewModel;
+﻿using PenaltyMaster3000.Navigation;
+using PenaltyMaster3000.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +17,18 @@ using System.Windows.Shapes;
 namespace PenaltyMaster3000.View
 {
     /// <summary>
-    /// Logique d'interaction pour MainView.xaml
+    /// Logique d'interaction pour StartView.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class StartView : Window
     {
-        public MainVM MainVM { get; set; }
+        public StartVM StartVM { get; set; }
 
-        public MainView()
+        public StartView()
         {
-            MainVM = new MainVM();
+            var navigationService = new NavigationService(this);
+            StartVM = new StartVM(navigationService);
             InitializeComponent();
-            DataContext = MainVM;
+            DataContext = StartVM;
         }
     }
 }
