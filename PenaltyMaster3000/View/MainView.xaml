@@ -11,7 +11,7 @@
             <ImageBrush ImageSource="/Images/goal_background.jpg" 
                         Stretch="UniformToFill"/>
         </Grid.Background>
-        
+
         <Grid Margin="110,101,128,59">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -107,6 +107,57 @@
                Height="50"
                VerticalAlignment="Bottom"
                Visibility="Visible"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" SharedSizeGroup="RowGroup"/>
+                <RowDefinition Height="*" SharedSizeGroup="RowGroup"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" SharedSizeGroup="ColumnGroup"/>
+                <ColumnDefinition Width="*" SharedSizeGroup="ColumnGroup"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="/Images/whistle.png"
+                   Grid.Column="1"
+                   Grid.Row="0"
+                   Visibility="{Binding WhistleImageVisibility}">
+                <Image.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Image.RenderTransform>
+                <Image.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="315" ShadowDepth="2"/>
+                </Image.Effect>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)"
+                                                 Duration="0:0:0.1"
+                                                 AutoReverse="True"
+                                                 From="0" To="-5" />
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                 Duration="0:0:0.1"
+                                                 AutoReverse="True"
+                                                 From="0" To="5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+
+            <TextBlock Text="{Binding ActionText}"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Background="Red"
+                       FontWeight="Bold"
+                       FontSize="100"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Visibility="{Binding ActionTextVisibility}"/>
+            
+        </Grid>
 
     </Grid>
 </UserControl>
