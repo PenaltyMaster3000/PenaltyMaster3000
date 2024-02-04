@@ -32,6 +32,12 @@ namespace PenaltyMaster3000.ViewModel
 
         private bool isSaveCompleted;
 
+        private bool isResultCompleted;
+
+        private bool isPlayer1Goalkeeper = false;
+
+        private int numberOfShoots = 0;
+
         public string ActionText { get; private set; }
 
         public Visibility ActionTextVisibility { get; private set; }
@@ -39,6 +45,8 @@ namespace PenaltyMaster3000.ViewModel
         public Visibility WhistleImageVisibility { get; private set; }
 
         public Visibility ScoreBoardVisibility { get; private set; }
+
+        public Visibility FinalResultVisibility { get; private set; }
 
         public Visibility BallStartingVisibility { get; private set; }
         public Visibility GoalStartingVisibility { get; private set; }
@@ -64,6 +72,8 @@ namespace PenaltyMaster3000.ViewModel
         public string Player1ScoreText { get; private set; }
 
         public string Player2ScoreText { get; private set; }
+
+        public string FinalWinnerText { get; private set; }
 
         public BitmapImage CurrentImageSource
         {
@@ -104,6 +114,21 @@ namespace PenaltyMaster3000.ViewModel
             }
         }
 
+        public bool IsResultCompleted
+        {
+            get { return isResultCompleted; }
+            set
+            {
+                if (SetProperty(ref isResultCompleted, value))
+                {
+                    if (value)
+                    {
+                        ShootCommand.Execute(null);
+                    }
+                }
+            }
+        }
+
         public ICommand ShootCommand { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
@@ -117,6 +142,7 @@ namespace PenaltyMaster3000.ViewModel
             goalTimer.Start();
             ActionTextVisibility = Visibility.Hidden;
             WhistleImageVisibility = Visibility.Hidden;
+            FinalResultVisibility = Visibility.Hidden;
             ShootCommand = new RelayCommand(Shoot);
             SaveCommand = new RelayCommand(Save);
             ResultCommand = new RelayCommand(Result);
@@ -178,6 +204,7 @@ namespace PenaltyMaster3000.ViewModel
                 RefereeTimer_Tick(sender, args);
                 // Après que le timer a expiré, marquez le tir comme terminé
                 IsShootCompleted = true;
+                OnPropertyChanged(nameof(IsShootCompleted));
             };
             refereeTimer.Start();
 
@@ -213,6 +240,9 @@ namespace PenaltyMaster3000.ViewModel
             OnPropertyChanged(nameof(GoalDownRightVisibility));
             OnPropertyChanged(nameof(GoalDownMiddleVisibility));
             OnPropertyChanged(nameof(GoalDownLeftVisibility));
+            
+            IsShootCompleted = false;
+            OnPropertyChanged(nameof(IsShootCompleted));
         }
 
         private void Save()
@@ -236,13 +266,49 @@ namespace PenaltyMaster3000.ViewModel
             refereeTimer.Tick += (sender, args) =>
             {
                 RefereeTimer_Tick(sender, args);
-                // Après que le timer a expiré, marquez le tir comme terminé
+                // Après que le timer a expiré, marquez l'arrêt comme terminé
                 IsSaveCompleted = true;
+                OnPropertyChanged(nameof(IsSaveCompleted));
             };
             refereeTimer.Start();
 
             // Arrêter le timer du déplacement automatique du Goal
             goalTimer.Stop();
+
+            // Liste des propriétés de visibilité des éléments Ball [TEMPORAIRE !]
+            List<Visibility> ballVisibilities = new List<Visibility>
+            {
+                BallTopRightVisibility, BallTopMiddleVisibility, BallTopLeftVisibility,
+                BallDownRightVisibility, BallDownMiddleVisibility, BallDownLeftVisibility
+            };
+
+            // Générez un index aléatoire pour choisir l'élément Goal à rendre visible
+            int randomIndex = random.Next(ballVisibilities.Count);
+
+            // Définissez la visibilité de l'élément Goal choisi sur Visible
+            ballVisibilities[randomIndex] = Visibility.Visible;
+
+            BallStartingVisibility = Visibility.Hidden;
+            GoalStartingVisibility = Visibility.Hidden;
+            OnPropertyChanged(nameof(BallStartingVisibility));
+            OnPropertyChanged(nameof(GoalStartingVisibility));
+
+            BallTopRightVisibility = ballVisibilities[0];
+            BallTopMiddleVisibility = ballVisibilities[1];
+            BallTopLeftVisibility = ballVisibilities[2];
+            BallDownRightVisibility = ballVisibilities[3];
+            BallDownMiddleVisibility = ballVisibilities[4];
+            BallDownLeftVisibility = ballVisibilities[5];
+
+            OnPropertyChanged(nameof(BallTopRightVisibility));
+            OnPropertyChanged(nameof(BallTopMiddleVisibility));
+            OnPropertyChanged(nameof(BallTopLeftVisibility));
+            OnPropertyChanged(nameof(BallDownRightVisibility));
+            OnPropertyChanged(nameof(BallDownMiddleVisibility));
+            OnPropertyChanged(nameof(BallDownLeftVisibility));
+
+            IsSaveCompleted = false;
+            OnPropertyChanged(nameof(IsSaveCompleted));
         }
 
         private void Result()
@@ -255,12 +321,12 @@ namespace PenaltyMaster3000.ViewModel
                                         AreElementsVisible(BallDownLeftVisibility, GoalDownLeftVisibility);
 
             // Vérifiez si toutes les paires d'éléments Ball et Goal sont visibles
-            if (isBallAndGoalVisible)
+            if (!isPlayer1Goalkeeper && !isBallAndGoalVisible)
             {
                 // Une paire d'éléments est visible, incrémentation du score du Shooter
                 player1Score++;
             }
-            else
+            else if (isPlayer1Goalkeeper && !isBallAndGoalVisible)
             {
                 // Aucune paire d'éléments est visible, incrémentation du score du Goalkeeper
                 player2Score++;
@@ -283,10 +349,31 @@ namespace PenaltyMaster3000.ViewModel
             // Démarrer un nouveau timer pour rendre le texte invisible après 2 secondes
             scoreBoardTimer = new DispatcherTimer();
             scoreBoardTimer.Interval = TimeSpan.FromSeconds(2);
-            scoreBoardTimer.Tick += ScoreBoardTimer_Tick;
+            scoreBoardTimer.Tick += (sender, args) =>
+            {
+                ScoreBoardTimer_Tick(sender, args);
+
+                numberOfShoots++;
+                if (numberOfShoots >= 10 && numberOfShoots % 2 == 0 && player1Score != player2Score)
+                {
+                    GameEnded();
+                }
+                else
+                {
+                    // Après que le timer a expiré, marquez l'affichage du résultat comme terminé
+                    IsResultCompleted = true;
+                    OnPropertyChanged(nameof(IsResultCompleted));
+                }
+            };
             scoreBoardTimer.Start();
 
+            isPlayer1Goalkeeper = !isPlayer1Goalkeeper;
+
             StartupVisibility();
+            goalTimer.Start();
+
+            IsResultCompleted = false;
+            OnPropertyChanged(nameof(IsResultCompleted));
         }
 
         // Méthode utilitaire pour vérifier si deux éléments sont visibles
@@ -326,6 +413,22 @@ namespace PenaltyMaster3000.ViewModel
             OnPropertyChanged(nameof(GoalDownMiddleVisibility));
             OnPropertyChanged(nameof(BallDownLeftVisibility));
             OnPropertyChanged(nameof(GoalDownLeftVisibility));
+        }
+
+        private void GameEnded()
+        {
+            if(player1Score > player2Score)
+            {
+                FinalWinnerText = "Player 1 wins the game !";
+                OnPropertyChanged(nameof(FinalWinnerText));
+            }
+            else
+            {
+                FinalWinnerText = "Player 2 wins the game !";
+                OnPropertyChanged(nameof(FinalWinnerText));
+            }
+            FinalResultVisibility = Visibility.Visible;
+            OnPropertyChanged(nameof(FinalResultVisibility));
         }
     }
 }
