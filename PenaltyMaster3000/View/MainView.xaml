@@ -27,86 +27,91 @@
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding GoalTopRightVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallTopRightVisibility}"/>
             
             <Image Source="/Images/goalkeeper_top_middle.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding GoalTopMiddleVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallTopMiddleVisibility}"/>
             
             <Image Source="/Images/goalkeeper_top_left.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding GoalTopLeftVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallTopLeftVisibility}"/>
             
             <Image Source="/Images/goalkeeper_down_right.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding GoalDownRightVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallDownRightVisibility}"/>
             
             <Image Source="{Binding CurrentImageSource}"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="Visible"/>
+                   Visibility="{Binding GoalStartingVisibility}"/>
+            <Image Source="/Images/goalkeeper_down_middle.png"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Visibility="{Binding GoalDownMiddleVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallDownMiddleVisibility}"/>
             
             <Image Source="/Images/goalkeeper_down_left.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding GoalDownLeftVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="Hidden"/>
+                   Visibility="{Binding BallDownLeftVisibility}"/>
         </Grid>
 
         <Image Source="/Images/football_ball.png" 
                Width="50"
                Height="50"
                VerticalAlignment="Bottom"
-               Visibility="Visible"/>
+               Visibility="{Binding BallStartingVisibility}"/>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -159,5 +164,64 @@
             
         </Grid>
 
+        <Border Margin="80"
+                BorderBrush="#FF2196F3" 
+                Background="#FFFFFF"
+                BorderThickness="2" 
+                CornerRadius="10" 
+                Padding="20"
+                Grid.Row="1"
+                Visibility="{Binding ScoreBoardVisibility}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Fond du panneau d'affichage -->
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#3F51B5" Offset="0"/>
+                        <GradientStop Color="#2196F3" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid Grid.Column="1"
+                  Grid.Row="1">
+                    <!-- Score de l'équipe 1 -->
+                    <TextBlock Text="{Binding Player1ScoreText}" 
+                           Foreground="White" 
+                           FontSize="80"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Margin="20,0,0,0"/>
+
+                    <!-- Séparateur central -->
+                    <TextBlock Text="-" 
+                           Foreground="White" 
+                           FontSize="80"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                    <!-- Score de l'équipe 2 -->
+                    <TextBlock Text="{Binding Player2ScoreText}" 
+                           Foreground="White" 
+                           FontSize="80"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0"/>
+                </Grid>
+
+            </Grid>
+            
+        </Border>
+        
     </Grid>
 </UserControl>
