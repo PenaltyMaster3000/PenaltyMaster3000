@@ -18,6 +18,11 @@ namespace KinectConnection
     /// </summary>
     public class BodyImageStream : KinectStream
     {
+        /// <summary>
+        /// Propriété liée à l'objet GestureManager
+        /// </summary>
+        //public GestureManager GestureManager { get; set; }
+
         // Le lecteur pour les données enoyées par le Kinect
         private BodyFrameReader bodyFrameReader = null;
 
