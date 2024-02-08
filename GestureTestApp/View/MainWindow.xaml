@@ -33,9 +33,9 @@
                 
             <Ellipse Width="30"
                      Height="30"
-                     Fill="{Binding KinectManager.Status, Converter={StaticResource KinectStatusToColorConverter}}"
+                     Fill="{Binding GestureManager.KinectManager.Status, Converter={StaticResource KinectStatusToColorConverter}}"
                      Grid.Column="1"/>
-            <TextBlock Text="{Binding KinectManager.StatusText}"
+            <TextBlock Text="{Binding GestureManager.KinectManager.StatusText}"
                        VerticalAlignment="Center"
                        FontWeight="Bold"
                        Grid.Column="3"/>
@@ -56,55 +56,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Color"
-                    Width="100"
-                    Height="30"
-                    Grid.Column="1"
-                    Command="{Binding ColorCommand}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Content="Depth"
-                    Width="100"
-                    Height="30"
-                    Grid.Column="3"
-                    Command="{Binding DepthCommand}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Content="Infrared"
-                    Width="100"
-                    Height="30"
-                    Grid.Column="5"
-                    Command="{Binding IRCommand}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
             <Button Content="Body"
                     Width="100"
                     Height="30"
-                    Grid.Column="7"
+                    Grid.Column="5"
                     Command="{Binding BodyCommand}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Content="Body and color"
-                    Width="100"
-                    Height="30"
-                    Grid.Column="9"
-                    Command="{Binding BodyColorCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -118,14 +74,8 @@
                      HorizontalAlignment="Center"
                      Height="400"
                      Width="400">
-                <Image Source="{Binding KinectStream.Source}"
+                <Image Source="{Binding BodyImageStream.Source}"
                        Opacity="50"/>
-            </Viewbox>
-            <Viewbox Grid.Row="1"
-                     HorizontalAlignment="Center"
-                     Height="400"
-                     Width="400">
-                <Image Source="{Binding KinectStream2.Source}"/>
             </Viewbox>
         </Grid>
     </Grid>

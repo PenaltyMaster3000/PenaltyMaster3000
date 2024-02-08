@@ -259,10 +259,6 @@ namespace KinectConnection
 
                             // dessiner les joints
                             this.DrawBody(joints, jointPoints, dc, drawPen);
-
-                            // dessiner les mains
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
-                            this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                     }
 
@@ -303,27 +299,6 @@ namespace KinectConnection
                 {
                     drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Méthode appelée pour le dessin d'une main
-        /// </summary>
-        private void DrawHand(HandState handState, Point handPosition, DrawingContext drawingContext)
-        {
-            switch (handState)
-            {
-                case HandState.Closed:
-                    drawingContext.DrawEllipse(this.handClosedBrush, null, handPosition, HandSize, HandSize);
-                    break;
-
-                case HandState.Open:
-                    drawingContext.DrawEllipse(this.handOpenBrush, null, handPosition, HandSize, HandSize);
-                    break;
-
-                case HandState.Lasso:
-                    drawingContext.DrawEllipse(this.handLassoBrush, null, handPosition, HandSize, HandSize);
-                    break;
             }
         }
 

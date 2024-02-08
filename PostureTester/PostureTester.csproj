@@ -54,6 +54,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KinectUtils\KinectUtils.csproj">
+      <Project>{2BC300E4-D3C1-4E17-A011-380EDB793182}</Project>
+      <Name>KinectUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyGestureBank\MyGestureBank.csproj">
       <Project>{d70b7357-6ff8-4f35-a283-8db4217c0c85}</Project>
       <Name>MyGestureBank</Name>
