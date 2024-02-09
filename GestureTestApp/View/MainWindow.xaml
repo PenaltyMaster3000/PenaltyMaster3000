@@ -1,0 +1,82 @@
+﻿<Window x:Class="KinectSensorStreams.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toolkit="clr-namespace:CommunityToolkit.Mvvm.Input;assembly=CommunityToolkit.Mvvm"
+        xmlns:local="clr-namespace:KinectSensorStreams.View"
+        xmlns:converter="clr-namespace:KinectSensorStreams.Converter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <converter:KinectStatusToColorConverter x:Key="KinectStatusToColorConverter" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+                
+            <Ellipse Width="30"
+                     Height="30"
+                     Fill="{Binding GestureManager.KinectManager.Status, Converter={StaticResource KinectStatusToColorConverter}}"
+                     Grid.Column="1"/>
+            <TextBlock Text="{Binding GestureManager.KinectManager.StatusText}"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       Grid.Column="3"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Body"
+                    Width="100"
+                    Height="30"
+                    Grid.Column="5"
+                    Command="{Binding BodyCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Viewbox Grid.Row="1"
+                     HorizontalAlignment="Center"
+                     Height="400"
+                     Width="400">
+                <Image Source="{Binding BodyImageStream.Source}"
+                       Opacity="50"/>
+            </Viewbox>
+        </Grid>
+    </Grid>
+</Window>
