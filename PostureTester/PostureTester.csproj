@@ -54,6 +54,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KinectConnection\KinectConnection.csproj">
+      <Project>{E527438A-DFA2-4EC6-9891-D4956152B093}</Project>
+      <Name>KinectConnection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KinectUtils\KinectUtils.csproj">
       <Project>{2BC300E4-D3C1-4E17-A011-380EDB793182}</Project>
       <Name>KinectUtils</Name>

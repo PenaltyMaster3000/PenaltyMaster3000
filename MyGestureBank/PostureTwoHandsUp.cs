@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace MyGestureBank
 {
     /// <summary>
-    /// The left hand up posture.
+    /// The two hands up posture.
     /// </summary>
-    public class PostureHandUpLeft : Posture
+    public class PostureTwoHandsUp : Posture
     {
-        public PostureHandUpLeft()
+        public PostureTwoHandsUp()
         {
-            GestureName = "HandUpLeft";
+            GestureName = "Two Hands Up";
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace MyGestureBank
         {
             if (TestPosture(body))
             {
-                Console.WriteLine("Gesture recognized, hand up left");
+                Console.WriteLine("Gesture recognized, two hands up");
                 Thread.Sleep(1000);
 
                 OnGestureRecognized();
@@ -42,9 +42,9 @@ namespace MyGestureBank
         /// <exception cref="NotImplementedException"></exception>
         protected override bool TestPosture(Body body)
         {
-            // Check if the left hand is above the left shoulder
-            return body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.SpineShoulder].Position.Y &&
-                body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
+            // Check if two hands are up
+            return body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.ShoulderRight].Position.Y &&
+                body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.ShoulderLeft].Position.Y;
         }
     }
 }

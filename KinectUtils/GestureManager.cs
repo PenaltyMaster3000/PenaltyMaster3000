@@ -3,15 +3,17 @@ using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KinectUtils
 {
-    public class GestureManager
+    public static class GestureManager
     {
 
-        private static bool isAcquiringFrame;
+        private static bool isAcquiringFrame = false; // false by default
         private static BodyFrameReader bodyFrameReader;
 
         // Properties
@@ -32,7 +34,7 @@ namespace KinectUtils
 
         public static void AddGestures(BaseGesture[] baseGestures) // params ???
         {
-            throw new NotImplementedException();
+            KnownGestures.AddRange(baseGestures);
         }
 
         public static void RemoveGesture(BaseGesture baseGesture) 
@@ -45,8 +47,8 @@ namespace KinectUtils
         {
             if (!isAcquiringFrame)
             {
-                KinectManager.KinectSensor.Open();
-                bodyFrameReader = KinectManager.KinectSensor.BodyFrameSource.OpenReader();
+                manager.KinectSensor.Open();
+                bodyFrameReader = manager.KinectSensor.BodyFrameSource.OpenReader();
                 bodyFrameReader.FrameArrived += BodyFrameReader_FrameArrived;
                 isAcquiringFrame = true;
             }
@@ -56,7 +58,7 @@ namespace KinectUtils
         {
             if (isAcquiringFrame)
             {
-                KinectManager.KinectSensor.Close();
+                manager.KinectSensor.Close();
                 bodyFrameReader.FrameArrived -= BodyFrameReader_FrameArrived;
                 isAcquiringFrame = false;
             }
@@ -75,7 +77,17 @@ namespace KinectUtils
                     {
                         if (body.IsTracked)
                         {
-                            //postureHandUpRight.TestGesture(body);
+                            foreach (var gesture in KnownGestures)
+                            {
+                                if (gesture != null)
+                                {
+                                    gesture.TestGesture(body);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("gesture null");
+                                }
+                            }
                         }
                     }
                 }

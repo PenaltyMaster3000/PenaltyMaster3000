@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
+using System.Threading;
 
 namespace MyGestureBank
 {
@@ -29,6 +30,8 @@ namespace MyGestureBank
         {
             if(TestPosture(body))
             {
+                Console.WriteLine("Gesture recognized, hand up right");
+                Thread.Sleep(1000);
                 OnGestureRecognized();
             }  
         }
@@ -40,7 +43,8 @@ namespace MyGestureBank
         /// <returns>A boolean indicating wheter the posture was detected or not.</returns>
         protected override bool TestPosture(Body body)
         {
-            return body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.ShoulderRight].Position.Y;
+            return body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.SpineShoulder].Position.Y &&
+                body.Joints[JointType.HandLeft].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
         }
     }
 }

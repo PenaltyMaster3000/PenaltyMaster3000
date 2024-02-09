@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace MyGestureBank
 {
     /// <summary>
-    /// The left hand up posture.
+    /// The right hand down posture.
     /// </summary>
-    public class PostureHandUpLeft : Posture
+    public class PostureHandDownRight : Posture
     {
-        public PostureHandUpLeft()
+        public PostureHandDownRight()
         {
-            GestureName = "HandUpLeft";
+            GestureName = "Hand Down Right";
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace MyGestureBank
         {
             if (TestPosture(body))
             {
-                Console.WriteLine("Gesture recognized, hand up left");
+                Console.WriteLine("Gesture recognized, hand down right");
                 Thread.Sleep(1000);
 
                 OnGestureRecognized();
@@ -42,9 +42,8 @@ namespace MyGestureBank
         /// <exception cref="NotImplementedException"></exception>
         protected override bool TestPosture(Body body)
         {
-            // Check if the left hand is above the left shoulder
-            return body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.SpineShoulder].Position.Y &&
-                body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
+            // Check if right hand is below the right hip
+            return body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.HipRight].Position.Y;
         }
     }
 }
