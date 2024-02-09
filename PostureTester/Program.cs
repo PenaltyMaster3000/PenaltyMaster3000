@@ -14,21 +14,24 @@ namespace PostureTester
     {
         static void Main(string[] args)
         {
-            PostureHandUpRight postureHandUpRight = new PostureHandUpRight();
+            /*PostureHandUpRight postureHandUpRight = new PostureHandUpRight();
             PostureHandUpLeft postureHandUpLeft = new PostureHandUpLeft();
             PostureHandDownLeft postureHandDownLeft = new PostureHandDownLeft();
             PostureHandDownRight postureHandDownRight = new PostureHandDownRight();
             PostureTwoHandsDown postureTwoHandsDown = new PostureTwoHandsDown();
-            PostureTwoHandsUp postureTwoHandsUp = new PostureTwoHandsUp();
+            PostureTwoHandsUp postureTwoHandsUp = new PostureTwoHandsUp();*/
 
+            SoccerShootGesture soccerShootGesture = new SoccerShootGesture();
 
-            BaseGesture[] gestures = new BaseGesture[6];
-            gestures[0] = postureHandUpLeft;
+            BaseGesture[] gestures = new BaseGesture[1];
+            /*gestures[0] = postureHandUpLeft;
             gestures[1] = postureHandUpRight;
             gestures[2] = postureHandDownLeft;
             gestures[3] = postureHandDownRight;
             gestures[4] = postureTwoHandsDown;
-            gestures[5] = postureTwoHandsUp;
+            gestures[5] = postureTwoHandsUp;*/
+
+            gestures[0] = soccerShootGesture;
 
             GestureManager.AddGestures(gestures);
 
