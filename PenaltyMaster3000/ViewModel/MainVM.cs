@@ -88,16 +88,31 @@ namespace PenaltyMaster3000.ViewModel
             set => SetProperty(ref vsMgr, value);
         }
 
+        // PLAYER TEXTS
+        private string player1ScoreText;
+        public string Player1ScoreText
+        {
+            get => player1ScoreText;
+            set => SetProperty(ref player1ScoreText, value);
+        }
 
-        public string Player1ScoreText { get; private set; }
+        private string player2ScoreText;
+        public string Player2ScoreText
+        {
+            get => player2ScoreText;
+            set => SetProperty(ref player2ScoreText, value);
+        }
 
-        public string Player2ScoreText { get; private set; }
-
-        public string FinalWinnerText { get; private set; }
+        private string finalWinnerText;
+        public string FinalWinnerText
+        {
+            get => finalWinnerText;
+            set => SetProperty(ref finalWinnerText, value);
+        }
 
         // ---
 
-        public BitmapImage CurrentImageSource
+        private BitmapImage CurrentImageSource
         {
             get
             {
@@ -193,8 +208,6 @@ namespace PenaltyMaster3000.ViewModel
         {
             ActionTextVisibility = Visibility.Hidden;
             WhistleImageVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(ActionTextVisibility));
-            OnPropertyChanged(nameof(WhistleImageVisibility));
 
             // Arrêter le timer
             refereeTimer.Stop();
@@ -204,9 +217,6 @@ namespace PenaltyMaster3000.ViewModel
         {
             // Rendre le texte invisible lorsque le timer expire
             ScoreBoardVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(ScoreBoardVisibility));
-
-            // Arrêter le timer
             scoreBoardTimer.Stop();
         }
 
@@ -216,7 +226,6 @@ namespace PenaltyMaster3000.ViewModel
 
             // Après que le timer a expiré, marquez le tir comme terminé
             IsShootCompleted = true;
-            OnPropertyChanged(nameof(IsShootCompleted));
 
             // Liste des propriétés de visibilité des éléments Goal
             List<Visibility> goalVisibilities = new List<Visibility>
@@ -246,7 +255,6 @@ namespace PenaltyMaster3000.ViewModel
             VsMgr.GoalDownLeftVisibility = goalVisibilities[5];
             
             IsShootCompleted = false;
-            OnPropertyChanged(nameof(IsShootCompleted));
         }
 
         private void Save()
@@ -254,9 +262,6 @@ namespace PenaltyMaster3000.ViewModel
             ActionText = "Save !";
             ActionTextVisibility = Visibility.Visible;
             WhistleImageVisibility = Visibility.Visible;
-            OnPropertyChanged(nameof(ActionText));
-            OnPropertyChanged(nameof(ActionTextVisibility));
-            OnPropertyChanged(nameof(WhistleImageVisibility));
 
             // Arrêter le timer précédent s'il était en cours
             if (refereeTimer != null && refereeTimer.IsEnabled)
@@ -272,7 +277,6 @@ namespace PenaltyMaster3000.ViewModel
                 RefereeTimer_Tick(sender, args);
                 // Après que le timer a expiré, marquez l'arrêt comme terminé
                 IsSaveCompleted = true;
-                OnPropertyChanged(nameof(IsSaveCompleted));
             };
             refereeTimer.Start();
 
@@ -303,7 +307,6 @@ namespace PenaltyMaster3000.ViewModel
             VsMgr.BallDownLeftVisibility = ballVisibilities[5];
 
             IsSaveCompleted = false;
-            OnPropertyChanged(nameof(IsSaveCompleted));
         }
 
         private void Result()
@@ -329,11 +332,8 @@ namespace PenaltyMaster3000.ViewModel
 
             Player1ScoreText = player1Score.ToString();
             Player2ScoreText = player2Score.ToString();
-            OnPropertyChanged(nameof(Player1ScoreText));
-            OnPropertyChanged(nameof(Player2ScoreText));
 
             ScoreBoardVisibility = Visibility.Visible;
-            OnPropertyChanged(nameof(ScoreBoardVisibility));
 
             // Arrêter le timer précédent s'il était en cours
             if (scoreBoardTimer != null && scoreBoardTimer.IsEnabled)
@@ -357,7 +357,6 @@ namespace PenaltyMaster3000.ViewModel
                 {
                     // Après que le timer a expiré, marquez l'affichage du résultat comme terminé
                     IsResultCompleted = true;
-                    OnPropertyChanged(nameof(IsResultCompleted));
                 }
             };
             scoreBoardTimer.Start();
@@ -368,7 +367,6 @@ namespace PenaltyMaster3000.ViewModel
             goalTimer.Start();
 
             IsResultCompleted = false;
-            OnPropertyChanged(nameof(IsResultCompleted));
         }
 
         // Méthode utilitaire pour vérifier si deux éléments sont visibles
@@ -387,15 +385,12 @@ namespace PenaltyMaster3000.ViewModel
             if(player1Score > player2Score)
             {
                 FinalWinnerText = "Player 1 wins the game !";
-                OnPropertyChanged(nameof(FinalWinnerText));
             }
             else
             {
                 FinalWinnerText = "Player 2 wins the game !";
-                OnPropertyChanged(nameof(FinalWinnerText));
             }
             FinalResultVisibility = Visibility.Visible;
-            OnPropertyChanged(nameof(FinalResultVisibility));
         }
 
         // new stuff
@@ -415,7 +410,6 @@ namespace PenaltyMaster3000.ViewModel
 
             // Hide scoreboard
             ScoreBoardVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(ScoreBoardVisibility));
 
             // Arrêter le timer précédent s'il était en cours
             if (refereeTimer != null && refereeTimer.IsEnabled)
