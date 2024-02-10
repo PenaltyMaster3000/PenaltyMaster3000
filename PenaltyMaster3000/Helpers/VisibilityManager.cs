@@ -125,27 +125,23 @@ namespace PenaltyMaster3000.Helpers
         }
 
         /// <summary>
-        /// Sets the visibility of the elements for the start of the game.
+        /// Checks if two elements on the same position are visible.
         /// </summary>
-        public void GameStartedVisibility()
+        /// <returns></returns>
+        public bool GetResult()
         {
-            // Starter attributes visible
-            StarterBall = Visibility.Visible;
-            StarterGoal = Visibility.Visible;
+            return AreElementsVisible(BallTopRightVisibility, GoalTopRightVisibility) ||
+                   AreElementsVisible(BallTopMiddleVisibility, GoalTopMiddleVisibility) ||
+                   AreElementsVisible(BallTopLeftVisibility, GoalTopLeftVisibility) ||
+                   AreElementsVisible(BallDownRightVisibility, GoalDownRightVisibility) ||
+                   AreElementsVisible(BallDownMiddleVisibility, GoalDownMiddleVisibility) ||
+                   AreElementsVisible(BallDownLeftVisibility, GoalDownLeftVisibility);
+        }
 
-            // Rest should be hidden
-            BallTopRightVisibility = Visibility.Hidden;
-            GoalTopRightVisibility = Visibility.Hidden;
-            BallTopMiddleVisibility = Visibility.Hidden;
-            GoalTopMiddleVisibility = Visibility.Hidden;
-            BallTopLeftVisibility = Visibility.Hidden;
-            GoalTopLeftVisibility = Visibility.Hidden;
-            BallDownRightVisibility = Visibility.Hidden;
-            GoalDownRightVisibility = Visibility.Hidden;
-            BallDownMiddleVisibility = Visibility.Hidden;
-            GoalDownMiddleVisibility = Visibility.Hidden;
-            BallDownLeftVisibility = Visibility.Hidden;
-            GoalDownLeftVisibility = Visibility.Hidden;
+        // Méthode utilitaire pour vérifier si deux éléments sont visibles
+        private bool AreElementsVisible(Visibility element1, Visibility element2)
+        {
+            return element1 == Visibility.Visible && element2 == Visibility.Visible;
         }
 
         /// <summary>
@@ -153,11 +149,17 @@ namespace PenaltyMaster3000.Helpers
         /// </summary>
         /// <param name="shotPosition"></param>
         /// <param name="defensePosition"></param>
-        public void SetResult(string shotPosition, string defensePosition)
+        public async Task SetResult(string shotPosition, string defensePosition)
         {
 
             updateBall(shotPosition);
+
+            // Delay to add some drama to the game
+            await Task.Delay(500);
+
             updateKeeper(defensePosition);
+
+            await Task.Delay(3000);
         }
 
         /// <summary>
@@ -166,6 +168,11 @@ namespace PenaltyMaster3000.Helpers
         /// <param name="shotPosition"></param>
         private void updateBall(string shotPosition)
         {
+            if(StarterBall == Visibility.Visible) 
+            {
+                StarterBall = Visibility.Hidden;
+            }
+
             switch (shotPosition)
             {
                 case "HandUpRight":
@@ -194,6 +201,11 @@ namespace PenaltyMaster3000.Helpers
         /// <param name="defensePosition"></param>
         private void updateKeeper(string defensePosition)
         {
+            if(StarterGoal == Visibility.Visible)
+            {
+                StarterGoal = Visibility.Hidden;
+            }
+
             switch (defensePosition)
             {
                 case "HandUpRight":
@@ -214,6 +226,30 @@ namespace PenaltyMaster3000.Helpers
 
                 default: return;
             }
+        }
+
+        /// <summary>
+        /// Sets the visibility of the elements for the start of the game.
+        /// </summary>
+        public void GameStartedVisibility()
+        {
+            // Starter attributes visible
+            StarterBall = Visibility.Visible;
+            StarterGoal = Visibility.Visible;
+
+            // Rest should be hidden
+            BallTopRightVisibility = Visibility.Hidden;
+            GoalTopRightVisibility = Visibility.Hidden;
+            BallTopMiddleVisibility = Visibility.Hidden;
+            GoalTopMiddleVisibility = Visibility.Hidden;
+            BallTopLeftVisibility = Visibility.Hidden;
+            GoalTopLeftVisibility = Visibility.Hidden;
+            BallDownRightVisibility = Visibility.Hidden;
+            GoalDownRightVisibility = Visibility.Hidden;
+            BallDownMiddleVisibility = Visibility.Hidden;
+            GoalDownMiddleVisibility = Visibility.Hidden;
+            BallDownLeftVisibility = Visibility.Hidden;
+            GoalDownLeftVisibility = Visibility.Hidden;
         }
     }
 }

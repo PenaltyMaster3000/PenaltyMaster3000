@@ -114,8 +114,8 @@ namespace PenaltyMaster3000.ViewModel
         }
 
         // ---
-
-        private BitmapImage CurrentImageSource
+                            
+        public BitmapImage CurrentImageSource
         {
             get
             {
@@ -242,10 +242,7 @@ namespace PenaltyMaster3000.ViewModel
 
             // Read a gesture for 5 seconds
             // Save the shot on the ShotHolder attribute
-            ShotHolder = await ReadAGesture(5);
-            
-            // Hide starter ball
-            VsMgr.StarterBall = Visibility.Hidden;
+            ShotHolder = await ReadAGesture(2);
 
             // IsShootCompleted = false;
             // Call the save method
@@ -257,7 +254,7 @@ namespace PenaltyMaster3000.ViewModel
             await DisplayActionText("GoalKeeper's turn. Get ready !", 3);
             await DisplayActionText("Choose an angle to defend.", 5);
 
-            DefenseHolder = await ReadAGesture(5);
+            DefenseHolder = await ReadAGesture(2);
 
             // Arrêter le timer du déplacement automatique du Goal
             goalTimer.Stop();
@@ -267,16 +264,15 @@ namespace PenaltyMaster3000.ViewModel
             Result();
         }
 
-        private void Result()
+        private async void Result()
         {
-            VsMgr.SetResult(ShotHolder, DefenseHolder);
+            // Update the view with shot and defense.
+            await VsMgr.SetResult(ShotHolder, DefenseHolder);
 
-            bool isBallAndGoalVisible = AreElementsVisible(VsMgr.BallTopRightVisibility, VsMgr.GoalTopRightVisibility) ||
-                                        AreElementsVisible(VsMgr.BallTopMiddleVisibility, VsMgr.GoalTopMiddleVisibility) ||
-                                        AreElementsVisible(VsMgr.BallTopLeftVisibility, VsMgr.GoalTopLeftVisibility) ||
-                                        AreElementsVisible(VsMgr.BallDownRightVisibility, VsMgr.GoalDownRightVisibility) ||
-                                        AreElementsVisible(VsMgr.BallDownMiddleVisibility, VsMgr.GoalDownMiddleVisibility) ||
-                                        AreElementsVisible(VsMgr.BallDownLeftVisibility, VsMgr.GoalDownLeftVisibility);
+            // get the result (goal or not goal).
+            bool isBallAndGoalVisible = VsMgr.GetResult();
+
+            // Update the score 
 
             // Vérifiez si toutes les paires d'éléments Ball et Goal sont visibles
             if (!isPlayer1Goalkeeper && !isBallAndGoalVisible)
@@ -329,17 +325,6 @@ namespace PenaltyMaster3000.ViewModel
             IsResultCompleted = false;
         }
 
-        // Méthode utilitaire pour vérifier si deux éléments sont visibles
-        private bool AreElementsVisible(Visibility element1, Visibility element2)
-        {
-            return element1 == Visibility.Visible && element2 == Visibility.Visible;
-        }
-
-        private void StartupVisibility()
-        {
-            VsMgr.GameStartedVisibility();
-        }
-
         private void GameEnded()
         {
             if(player1Score > player2Score)
@@ -351,6 +336,14 @@ namespace PenaltyMaster3000.ViewModel
                 FinalWinnerText = "Player 2 wins the game !";
             }
             FinalResultVisibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Sets the starting visibility for the game.
+        /// </summary>
+        private void StartupVisibility()
+        {
+            VsMgr.GameStartedVisibility();
         }
 
         // new stuff
@@ -400,7 +393,7 @@ namespace PenaltyMaster3000.ViewModel
             // load all 
             GestureManager.AddGestures(this.GestureFactory);
 
-            // subscirbe to the OnGestureRecognized event 
+            /*// subscirbe to the OnGestureRecognized event 
             foreach (var gesture in GestureManager.KnownGestures)
             {
                 gesture.GestureRecognized += (sender, args) =>
@@ -423,9 +416,10 @@ namespace PenaltyMaster3000.ViewModel
             foreach (var gesture in GestureManager.KnownGestures)
             {
                 gesture.GestureRecognized = null;
-            }
+            }*/
 
-            return gestureRead;
+            // return gestureRead;
+            return "HandUpRight";
         }
     }
 }
