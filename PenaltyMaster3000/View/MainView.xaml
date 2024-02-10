@@ -27,91 +27,91 @@
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="{Binding GoalTopRightVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalTopRightVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="{Binding BallTopRightVisibility}"/>
+                   Visibility="{Binding VsMgr.BallTopRightVisibility}"/>
             
             <Image Source="/Images/goalkeeper_top_middle.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding GoalTopMiddleVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalTopMiddleVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding BallTopMiddleVisibility}"/>
+                   Visibility="{Binding VsMgr.BallTopMiddleVisibility}"/>
             
             <Image Source="/Images/goalkeeper_top_left.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="{Binding GoalTopLeftVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalTopLeftVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="0"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="{Binding BallTopLeftVisibility}"/>
+                   Visibility="{Binding VsMgr.BallTopLeftVisibility}"/>
             
             <Image Source="/Images/goalkeeper_down_right.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="{Binding GoalDownRightVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalDownRightVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="0"
-                   Visibility="{Binding BallDownRightVisibility}"/>
-            
-            <Image Source="{Binding CurrentImageSource}"
+                   Visibility="{Binding VsMgr.BallDownRightVisibility}"/>
+
+            <Image Source="{Binding VsMgr.CurrentImageSource}"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding GoalStartingVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalStartingVisibility}"/>
             <Image Source="/Images/goalkeeper_down_middle.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding GoalDownMiddleVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalDownMiddleVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding BallDownMiddleVisibility}"/>
+                   Visibility="{Binding VsMgr.BallDownMiddleVisibility}"/>
             
             <Image Source="/Images/goalkeeper_down_left.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="{Binding GoalDownLeftVisibility}"/>
+                   Visibility="{Binding VsMgr.GoalDownLeftVisibility}"/>
             <Image Source="/Images/football_ball.png" 
                    Width="50"
                    Height="50"
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="2"
-                   Visibility="{Binding BallDownLeftVisibility}"/>
+                   Visibility="{Binding VsMgr.BallDownLeftVisibility}"/>
         </Grid>
 
         <Image Source="/Images/football_ball.png" 
                Width="50"
                Height="50"
                VerticalAlignment="Bottom"
-               Visibility="{Binding BallStartingVisibility}"/>
+               Visibility="{Binding VsMgr.BallStartingVisibility}"/>
 
         <Grid>
             <Grid.RowDefinitions>

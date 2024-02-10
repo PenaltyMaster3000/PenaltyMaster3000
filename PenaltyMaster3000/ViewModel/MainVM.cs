@@ -81,7 +81,12 @@ namespace PenaltyMaster3000.ViewModel
         /// <summary>
         /// The goal's visibility manager.
         /// </summary>
-        public VisibilityManager VsMgr;
+        private VisibilityManager vsMgr;
+        public VisibilityManager VsMgr
+        {
+            get => vsMgr;
+            set => SetProperty(ref vsMgr, value);
+        }
 
 
         public string Player1ScoreText { get; private set; }
@@ -159,6 +164,8 @@ namespace PenaltyMaster3000.ViewModel
         {
             this.GestureFactory = new PenaltyMasterGestureFactory();
 
+            VsMgr = new VisibilityManager();
+
             goalTimer.Interval = TimeSpan.FromSeconds(1);
             goalTimer.Tick += GoalTimer_Tick;
             goalTimer.Start();
@@ -228,10 +235,8 @@ namespace PenaltyMaster3000.ViewModel
             // Définissez la visibilité de l'élément Goal choisi sur Visible
             //goalVisibilities[randomIndex] = Visibility.Visible;
 
-            BallStartingVisibility = Visibility.Hidden;
-            GoalStartingVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(BallStartingVisibility));
-            OnPropertyChanged(nameof(GoalStartingVisibility));
+            VsMgr.StarterBall = Visibility.Hidden;
+            VsMgr.StarterGoal = Visibility.Hidden;
 
             VsMgr.GoalTopRightVisibility = goalVisibilities[0];
             VsMgr.GoalTopMiddleVisibility = goalVisibilities[1];
@@ -287,10 +292,8 @@ namespace PenaltyMaster3000.ViewModel
             // Définissez la visibilité de l'élément Goal choisi sur Visible
             ballVisibilities[randomIndex] = Visibility.Visible;
 
-            BallStartingVisibility = Visibility.Hidden;
-            GoalStartingVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(BallStartingVisibility));
-            OnPropertyChanged(nameof(GoalStartingVisibility));
+            VsMgr.StarterBall = Visibility.Hidden;
+            VsMgr.StarterGoal = Visibility.Hidden;
 
             VsMgr.BallTopRightVisibility = ballVisibilities[0];
             VsMgr.BallTopMiddleVisibility = ballVisibilities[1];
