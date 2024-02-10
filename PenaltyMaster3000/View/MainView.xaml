@@ -157,7 +157,7 @@
                        Grid.Column="0"
                        Background="Red"
                        FontWeight="Bold"
-                       FontSize="100"
+                       FontSize="20"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Visibility="{Binding ActionTextVisibility}"/>
