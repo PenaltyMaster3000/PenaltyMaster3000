@@ -154,6 +154,20 @@
   <ItemGroup>
     <Resource Include="Images\football_ball.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KinectConnection\KinectConnection.csproj">
+      <Project>{E527438A-DFA2-4EC6-9891-D4956152B093}</Project>
+      <Name>KinectConnection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KinectUtils\KinectUtils.csproj">
+      <Project>{2BC300E4-D3C1-4E17-A011-380EDB793182}</Project>
+      <Name>KinectUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyGestureBank\MyGestureBank.csproj">
+      <Project>{D70B7357-6FF8-4F35-A283-8DB4217C0C85}</Project>
+      <Name>MyGestureBank</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -27,9 +27,15 @@ namespace KinectUtils
         public static IGestureFactory Factory { get; set; }
 
         // Methods
+
+        /// <summary>
+        /// Add gestures using the factory.
+        /// </summary>
+        /// <param name="factory">The gesture factory.</param>
         public static void AddGestures(IGestureFactory factory)
         {
-            throw new NotImplementedException();
+            var gestures = factory.CreateGestures().ToList();
+            KnownGestures.AddRange(gestures);
         }
 
         public static void AddGestures(BaseGesture[] baseGestures) // params ???

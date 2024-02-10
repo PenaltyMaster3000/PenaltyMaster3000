@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PenaltyMasterGestureFactory.cs" />
     <Compile Include="PostureHandDownLeft.cs" />
     <Compile Include="PostureHandDownRight.cs" />
     <Compile Include="PostureHandUpLeft.cs" />

@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using KinectUtils;
+using MyGestureBank;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,8 @@ namespace PenaltyMaster3000.ViewModel
 {
     public class MainVM : ObservableObject
     {
+        public IGestureFactory GestureFactory { get; set; }
+
         private DispatcherTimer goalTimer = new DispatcherTimer();
 
         private DispatcherTimer refereeTimer = new DispatcherTimer();
@@ -75,6 +79,8 @@ namespace PenaltyMaster3000.ViewModel
 
         public string FinalWinnerText { get; private set; }
 
+        // ---
+
         public BitmapImage CurrentImageSource
         {
             get
@@ -129,6 +135,9 @@ namespace PenaltyMaster3000.ViewModel
             }
         }
 
+        // ---
+
+        
         public ICommand ShootCommand { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
@@ -137,6 +146,8 @@ namespace PenaltyMaster3000.ViewModel
         
         public MainVM() 
         {
+            this.GestureFactory = new PenaltyMasterGestureFactory();
+
             goalTimer.Interval = TimeSpan.FromSeconds(1);
             goalTimer.Tick += GoalTimer_Tick;
             goalTimer.Start();
@@ -181,32 +192,10 @@ namespace PenaltyMaster3000.ViewModel
         {
             StartupVisibility();
 
-            ActionText = "Shoot !";
-            ActionTextVisibility = Visibility.Visible;
-            WhistleImageVisibility = Visibility.Visible;
-            ScoreBoardVisibility = Visibility.Hidden;
-            OnPropertyChanged(nameof(ActionText));
-            OnPropertyChanged(nameof(ActionTextVisibility));
-            OnPropertyChanged(nameof(WhistleImageVisibility));
-            OnPropertyChanged(nameof(ScoreBoardVisibility));
-
-            // Arrêter le timer précédent s'il était en cours
-            if (refereeTimer != null && refereeTimer.IsEnabled)
-            {
-                refereeTimer.Stop();
-            }
-
-            // Démarrer un nouveau timer pour rendre le texte invisible après 2 secondes
-            refereeTimer = new DispatcherTimer();
-            refereeTimer.Interval = TimeSpan.FromSeconds(2);
-            refereeTimer.Tick += (sender, args) =>
-            {
-                RefereeTimer_Tick(sender, args);
-                // Après que le timer a expiré, marquez le tir comme terminé
-                IsShootCompleted = true;
-                OnPropertyChanged(nameof(IsShootCompleted));
-            };
-            refereeTimer.Start();
+            displayTextOnScreen(2, "Get Ready to Shoot !");
+            // Après que le timer a expiré, marquez le tir comme terminé
+            IsShootCompleted = true;
+            OnPropertyChanged(nameof(IsShootCompleted));
 
 
             // Liste des propriétés de visibilité des éléments Goal
@@ -217,10 +206,14 @@ namespace PenaltyMaster3000.ViewModel
             };
 
             // Générez un index aléatoire pour choisir l'élément Goal à rendre visible
-            int randomIndex = random.Next(goalVisibilities.Count);
+            //int randomIndex = random.Next(goalVisibilities.Count);
+
+            // Let the player choose a angle to shoot
+            displayTextOnScreen(2, "Choose an angle to shoot.");
+            
 
             // Définissez la visibilité de l'élément Goal choisi sur Visible
-            goalVisibilities[randomIndex] = Visibility.Visible;
+            //goalVisibilities[randomIndex] = Visibility.Visible;
 
             BallStartingVisibility = Visibility.Hidden;
             GoalStartingVisibility = Visibility.Hidden;
@@ -234,6 +227,7 @@ namespace PenaltyMaster3000.ViewModel
             GoalDownMiddleVisibility = goalVisibilities[4];
             GoalDownLeftVisibility = goalVisibilities[5];
 
+            // A DEPLACER POUR APRES
             OnPropertyChanged(nameof(GoalTopRightVisibility));
             OnPropertyChanged(nameof(GoalTopMiddleVisibility));
             OnPropertyChanged(nameof(GoalTopLeftVisibility));
@@ -429,6 +423,73 @@ namespace PenaltyMaster3000.ViewModel
             }
             FinalResultVisibility = Visibility.Visible;
             OnPropertyChanged(nameof(FinalResultVisibility));
+        }
+
+        // new stuff
+
+        private void displayTextOnScreen(int timeToBeDisplayedInSeconds, string textToBeDisplayed)
+        {
+            ActionText = textToBeDisplayed;
+            ActionTextVisibility = Visibility.Visible;
+            WhistleImageVisibility = Visibility.Visible;
+            ScoreBoardVisibility = Visibility.Hidden;
+            OnPropertyChanged(nameof(ActionText));
+            OnPropertyChanged(nameof(ActionTextVisibility));
+            OnPropertyChanged(nameof(WhistleImageVisibility));
+            OnPropertyChanged(nameof(ScoreBoardVisibility));
+
+            // Arrêter le timer précédent s'il était en cours
+            if (refereeTimer != null && refereeTimer.IsEnabled)
+            {
+                refereeTimer.Stop();
+            }
+
+            // Démarrer un nouveau timer pour rendre le texte invisible après 2 secondes
+            refereeTimer = new DispatcherTimer();
+            refereeTimer.Interval = TimeSpan.FromSeconds(timeToBeDisplayedInSeconds);
+            refereeTimer.Tick += (sender, args) =>
+            {
+                RefereeTimer_Tick(sender, args);
+            };
+
+            refereeTimer.Start();
+        }
+
+        /*
+         * Use the gesture manager to read a gesture
+         */
+        private async Task<string> ReadAGesture(int ReadTimeInSeconds)
+        {
+            string gestureRead = "";
+
+            // load all 
+            GestureManager.AddGestures(this.GestureFactory);
+
+            // subscirbe to the OnGestureRecognized event 
+            foreach (var gesture in GestureManager.KnownGestures)
+            {
+                gesture.GestureRecognized += (sender, args) =>
+                {
+                    // If new gesture read, replace th gesture name
+                    if(gestureRead != args.GestureName)
+                    {
+                        gestureRead = args.GestureName;
+                    }
+                };
+            }
+
+            // Read frames for ReadTimeSeconds
+            GestureManager.StartAcquiringFrames(GestureManager.KinectManager);
+            await Task.Delay(ReadTimeInSeconds*1000);
+
+            // Stop reading and unsub from the GestureRecognized event to prevent memory leaks
+            GestureManager.StopAcquiringFrame(GestureManager.KinectManager);
+            foreach (var gesture in GestureManager.KnownGestures)
+            {
+                gesture.GestureRecognized = null;
+            }
+
+            return gestureRead;
         }
     }
 }
