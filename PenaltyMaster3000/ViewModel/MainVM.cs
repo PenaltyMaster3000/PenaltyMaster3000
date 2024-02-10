@@ -19,6 +19,9 @@ namespace PenaltyMaster3000.ViewModel
     {
         public IGestureFactory GestureFactory { get; set; }
 
+        public String ShotHolder {  get; set; }
+        public String DefenseHolder {  get; set; }
+
         private DispatcherTimer goalTimer = new DispatcherTimer();
 
         private DispatcherTimer refereeTimer = new DispatcherTimer();
@@ -184,12 +187,15 @@ namespace PenaltyMaster3000.ViewModel
             goalTimer.Interval = TimeSpan.FromSeconds(1);
             goalTimer.Tick += GoalTimer_Tick;
             goalTimer.Start();
+
             ActionTextVisibility = Visibility.Hidden;
             WhistleImageVisibility = Visibility.Hidden;
             FinalResultVisibility = Visibility.Hidden;
+
             ShootCommand = new RelayCommand(Shoot);
             SaveCommand = new RelayCommand(Save);
             ResultCommand = new RelayCommand(Result);
+
             Shoot();
         }
 
@@ -227,90 +233,44 @@ namespace PenaltyMaster3000.ViewModel
             // Après que le timer a expiré, marquez le tir comme terminé
             IsShootCompleted = true;
 
-            // Liste des propriétés de visibilité des éléments Goal
-            List<Visibility> goalVisibilities = new List<Visibility>
-            {
-                VsMgr.GoalTopRightVisibility, VsMgr.GoalTopMiddleVisibility, VsMgr.GoalTopLeftVisibility,
-                VsMgr.GoalDownRightVisibility, VsMgr.GoalDownMiddleVisibility, VsMgr.GoalDownLeftVisibility
-            };
-
             // Générez un index aléatoire pour choisir l'élément Goal à rendre visible
             //int randomIndex = random.Next(goalVisibilities.Count);
 
             // Let the player choose a angle to shoot
-            await DisplayActionText("Shooter's Turn. Get ready !", 3);
+            await DisplayActionText("Shooter's turn. Get ready !", 3);
             await DisplayActionText("Choose an angle to shoot.", 5);
 
-            // Définissez la visibilité de l'élément Goal choisi sur Visible
-            //goalVisibilities[randomIndex] = Visibility.Visible;
-
-            VsMgr.StarterBall = Visibility.Hidden;
-            VsMgr.StarterGoal = Visibility.Hidden;
-
-            VsMgr.GoalTopRightVisibility = goalVisibilities[0];
-            VsMgr.GoalTopMiddleVisibility = goalVisibilities[1];
-            VsMgr.GoalTopLeftVisibility = goalVisibilities[2];
-            VsMgr.GoalDownRightVisibility = goalVisibilities[3];
-            VsMgr.GoalDownMiddleVisibility = goalVisibilities[4];
-            VsMgr.GoalDownLeftVisibility = goalVisibilities[5];
+            // Read a gesture for 5 seconds
+            // Save the shot on the ShotHolder attribute
+            ShotHolder = await ReadAGesture(5);
             
-            IsShootCompleted = false;
+            // Hide starter ball
+            VsMgr.StarterBall = Visibility.Hidden;
+
+            // IsShootCompleted = false;
+            // Call the save method
+            Save();
         }
 
-        private void Save()
+        private async void Save()
         {
-            ActionText = "Save !";
-            ActionTextVisibility = Visibility.Visible;
-            WhistleImageVisibility = Visibility.Visible;
+            await DisplayActionText("GoalKeeper's turn. Get ready !", 3);
+            await DisplayActionText("Choose an angle to defend.", 5);
 
-            // Arrêter le timer précédent s'il était en cours
-            if (refereeTimer != null && refereeTimer.IsEnabled)
-            {
-                refereeTimer.Stop();
-            }
-
-            // Démarrer un nouveau timer pour rendre le texte invisible après 2 secondes
-            refereeTimer = new DispatcherTimer();
-            refereeTimer.Interval = TimeSpan.FromSeconds(2);
-            refereeTimer.Tick += (sender, args) =>
-            {
-                RefereeTimer_Tick(sender, args);
-                // Après que le timer a expiré, marquez l'arrêt comme terminé
-                IsSaveCompleted = true;
-            };
-            refereeTimer.Start();
+            DefenseHolder = await ReadAGesture(5);
 
             // Arrêter le timer du déplacement automatique du Goal
             goalTimer.Stop();
 
-            // Liste des propriétés de visibilité des éléments Ball [TEMPORAIRE !]
-            List<Visibility> ballVisibilities = new List<Visibility>
-            {
-                VsMgr.BallTopRightVisibility, VsMgr.BallTopMiddleVisibility, VsMgr.BallTopLeftVisibility,
-                VsMgr.BallDownRightVisibility, VsMgr.BallDownMiddleVisibility, VsMgr.BallDownLeftVisibility
-            };
+            // IsSaveCompleted = false;
 
-            // Générez un index aléatoire pour choisir l'élément Goal à rendre visible
-            int randomIndex = random.Next(ballVisibilities.Count);
-
-            // Définissez la visibilité de l'élément Goal choisi sur Visible
-            ballVisibilities[randomIndex] = Visibility.Visible;
-
-            VsMgr.StarterBall = Visibility.Hidden;
-            VsMgr.StarterGoal = Visibility.Hidden;
-
-            VsMgr.BallTopRightVisibility = ballVisibilities[0];
-            VsMgr.BallTopMiddleVisibility = ballVisibilities[1];
-            VsMgr.BallTopLeftVisibility = ballVisibilities[2];
-            VsMgr.BallDownRightVisibility = ballVisibilities[3];
-            VsMgr.BallDownMiddleVisibility = ballVisibilities[4];
-            VsMgr.BallDownLeftVisibility = ballVisibilities[5];
-
-            IsSaveCompleted = false;
+            Result();
         }
 
         private void Result()
-        {   
+        {
+            VsMgr.SetResult(ShotHolder, DefenseHolder);
+
             bool isBallAndGoalVisible = AreElementsVisible(VsMgr.BallTopRightVisibility, VsMgr.GoalTopRightVisibility) ||
                                         AreElementsVisible(VsMgr.BallTopMiddleVisibility, VsMgr.GoalTopMiddleVisibility) ||
                                         AreElementsVisible(VsMgr.BallTopLeftVisibility, VsMgr.GoalTopLeftVisibility) ||

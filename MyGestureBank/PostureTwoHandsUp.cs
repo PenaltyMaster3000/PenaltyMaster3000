@@ -16,7 +16,7 @@ namespace MyGestureBank
     {
         public PostureTwoHandsUp()
         {
-            GestureName = "Two Hands Up";
+            GestureName = "HandsUp";
         }
 
         /// <summary>

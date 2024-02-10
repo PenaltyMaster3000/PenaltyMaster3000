@@ -79,7 +79,7 @@
                    Grid.Row="1"
                    Grid.RowSpan="2"
                    Grid.Column="1"
-                   Visibility="{Binding VsMgr.GoalStartingVisibility}"/>
+                   Visibility="{Binding VsMgr.StarterGoal}"/>
             <Image Source="/Images/goalkeeper_down_middle.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
@@ -111,7 +111,7 @@
                Width="50"
                Height="50"
                VerticalAlignment="Bottom"
-               Visibility="{Binding VsMgr.BallStartingVisibility}"/>
+               Visibility="{Binding VsMgr.Starterball}"/>
 
         <Grid>
             <Grid.RowDefinitions>

@@ -16,7 +16,7 @@ namespace MyGestureBank
     {
         public PostureHandDownLeft()
         {
-            GestureName = "Hand Down Left";
+            GestureName = "HandDownLeft";
         }
 
         /// <summary>
