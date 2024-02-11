@@ -35,7 +35,14 @@
                    Grid.RowSpan="2"
                    Grid.Column="0"
                    Visibility="{Binding VsMgr.BallTopRightVisibility}"/>
-            
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Visibility="{Binding VsMgr.QuestionPointTopRightVisibility}"/>
+
             <Image Source="/Images/goalkeeper_top_middle.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
@@ -48,7 +55,14 @@
                    Grid.RowSpan="2"
                    Grid.Column="1"
                    Visibility="{Binding VsMgr.BallTopMiddleVisibility}"/>
-            
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Visibility="{Binding VsMgr.QuestionPointTopMiddleVisibility}"/>
+
             <Image Source="/Images/goalkeeper_top_left.png"
                    Grid.Row="0"
                    Grid.RowSpan="2"
@@ -61,7 +75,15 @@
                    Grid.RowSpan="2"
                    Grid.Column="2"
                    Visibility="{Binding VsMgr.BallTopLeftVisibility}"/>
-            
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="2"
+                   Visibility="{Binding VsMgr.QuestionPointTopLeftVisibility}"/>
+
+
             <Image Source="/Images/goalkeeper_down_right.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
@@ -74,6 +96,13 @@
                    Grid.RowSpan="2"
                    Grid.Column="0"
                    Visibility="{Binding VsMgr.BallDownRightVisibility}"/>
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Visibility="{Binding VsMgr.QuestionPointDownRightVisibility}"/>
 
             <Image Source="{Binding CurrentImageSource}"
                    Grid.Row="1"
@@ -92,7 +121,14 @@
                    Grid.RowSpan="2"
                    Grid.Column="1"
                    Visibility="{Binding VsMgr.BallDownMiddleVisibility}"/>
-            
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Visibility="{Binding VsMgr.QuestionPointDownMiddleVisibility}"/>
+
             <Image Source="/Images/goalkeeper_down_left.png"
                    Grid.Row="1"
                    Grid.RowSpan="2"
@@ -105,6 +141,13 @@
                    Grid.RowSpan="2"
                    Grid.Column="2"
                    Visibility="{Binding VsMgr.BallDownLeftVisibility}"/>
+            <Image Source="/Images/white_question_point.png" 
+                   Width="40"
+                   Height="40"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="2"
+                   Visibility="{Binding VsMgr.QuestionPointDownLeftVisibility}"/>
         </Grid>
 
         <Image Source="/Images/football_ball.png" 

@@ -30,6 +30,13 @@ namespace PenaltyMaster3000.Helpers
             set => SetProperty(ref goalTopRightVisibility, value);
         }
 
+        private Visibility questionPointTopRightVisibility;
+        public Visibility QuestionPointTopRightVisibility
+        {
+            get => questionPointTopRightVisibility;
+            set => SetProperty(ref questionPointTopRightVisibility, value);
+        }
+
         // Top Left
         private Visibility ballTopLeftVisibility;
         public Visibility BallTopLeftVisibility
@@ -43,6 +50,13 @@ namespace PenaltyMaster3000.Helpers
         {
             get => goalTopLeftVisibility;
             set => SetProperty(ref goalTopLeftVisibility, value);
+        }
+
+        private Visibility questionPointTopLeftVisibility;
+        public Visibility QuestionPointTopLeftVisibility
+        {
+            get => questionPointTopLeftVisibility;
+            set => SetProperty(ref questionPointTopLeftVisibility, value);
         }
         // ---
 
@@ -61,6 +75,13 @@ namespace PenaltyMaster3000.Helpers
             set => SetProperty(ref goalTopMiddleVisibility, value);
         }
 
+        private Visibility questionPointTopMiddleVisibility;
+        public Visibility QuestionPointTopMiddleVisibility
+        {
+            get => questionPointTopMiddleVisibility;
+            set => SetProperty(ref questionPointTopMiddleVisibility, value);
+        }
+
         // Down middle
         private Visibility ballDownMiddleVisibility;
         public Visibility BallDownMiddleVisibility
@@ -74,6 +95,13 @@ namespace PenaltyMaster3000.Helpers
         {
             get => goalDownMiddleVisibility;
             set => SetProperty(ref goalDownMiddleVisibility, value);
+        }
+
+        private Visibility questionPointDownMiddleVisibility;
+        public Visibility QuestionPointDownMiddleVisibility
+        {
+            get => questionPointDownMiddleVisibility;
+            set => SetProperty(ref questionPointDownMiddleVisibility, value);
         }
         // ---
 
@@ -92,6 +120,13 @@ namespace PenaltyMaster3000.Helpers
             set => SetProperty(ref goalDownRightVisibility, value);
         }
 
+        private Visibility questionPointDownRightVisibility;
+        public Visibility QuestionPointDownRightVisibility
+        {
+            get => questionPointDownRightVisibility;
+            set => SetProperty(ref questionPointDownRightVisibility, value);
+        }
+
         // Down left
         private Visibility ballDownLeftVisibility;
         public Visibility BallDownLeftVisibility
@@ -105,6 +140,13 @@ namespace PenaltyMaster3000.Helpers
         {
             get => goalDownLeftVisibility;
             set => SetProperty(ref goalDownLeftVisibility, value);
+        }
+
+        private Visibility questionPointDownLeftVisibility;
+        public Visibility QuestionPointDownLeftVisibility
+        {
+            get => questionPointDownLeftVisibility;
+            set => SetProperty(ref questionPointDownLeftVisibility, value);
         }
         /// --- 
 
@@ -145,6 +187,34 @@ namespace PenaltyMaster3000.Helpers
         }
 
         /// <summary>
+        /// Update the view with the question point position.
+        /// </summary>
+        /// <param name="gesturePosition"></param>
+        public void SetQuestionPoint(string gesturePosition)
+        {
+            switch (gesturePosition)
+            {
+                case "HandUpRight":
+                    QuestionPointTopRightVisibility = Visibility.Visible;
+                    break;
+
+                case "HandUpLeft":
+                    QuestionPointTopLeftVisibility = Visibility.Visible;
+                    break;
+
+                case "HandDownRight":
+                    QuestionPointDownRightVisibility = Visibility.Visible;
+                    break;
+
+                case "HandDownLeft":
+                    QuestionPointTopRightVisibility = Visibility.Visible;
+                    break;
+
+                default: return;
+            }
+        }
+
+        /// <summary>
         /// Update the view with the latest shot and defense.
         /// </summary>
         /// <param name="shotPosition"></param>
@@ -176,18 +246,22 @@ namespace PenaltyMaster3000.Helpers
             switch (shotPosition)
             {
                 case "HandUpRight":
+                    QuestionPointTopRightVisibility = Visibility.Hidden;
                     BallTopRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandUpLeft":
+                    QuestionPointTopLeftVisibility = Visibility.Hidden;
                     BallTopLeftVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownRight":
+                    QuestionPointDownRightVisibility = Visibility.Hidden;
                     BallDownRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownLeft":
+                    QuestionPointTopRightVisibility = Visibility.Hidden;
                     BallTopRightVisibility = Visibility.Visible;
                     break;
 
@@ -240,16 +314,22 @@ namespace PenaltyMaster3000.Helpers
             // Rest should be hidden
             BallTopRightVisibility = Visibility.Hidden;
             GoalTopRightVisibility = Visibility.Hidden;
+            QuestionPointTopRightVisibility = Visibility.Hidden;
             BallTopMiddleVisibility = Visibility.Hidden;
             GoalTopMiddleVisibility = Visibility.Hidden;
+            QuestionPointTopMiddleVisibility = Visibility.Hidden;
             BallTopLeftVisibility = Visibility.Hidden;
             GoalTopLeftVisibility = Visibility.Hidden;
+            QuestionPointTopLeftVisibility = Visibility.Hidden;
             BallDownRightVisibility = Visibility.Hidden;
             GoalDownRightVisibility = Visibility.Hidden;
+            QuestionPointDownRightVisibility = Visibility.Hidden;
             BallDownMiddleVisibility = Visibility.Hidden;
             GoalDownMiddleVisibility = Visibility.Hidden;
+            QuestionPointDownMiddleVisibility = Visibility.Hidden;
             BallDownLeftVisibility = Visibility.Hidden;
             GoalDownLeftVisibility = Visibility.Hidden;
+            QuestionPointDownLeftVisibility = Visibility.Hidden;
         }
     }
 }

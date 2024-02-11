@@ -403,6 +403,10 @@ namespace PenaltyMaster3000.ViewModel
                     {
                         // [TODO?] Display gesture on screen
                         gestureRead = args.GestureName;
+                        */
+                        gestureRead = "HandUpRight"; //TEST [TO REPLACE BY gestureRead = args.GestureName;]
+                        VsMgr.SetQuestionPoint(gestureRead);
+                        /*
                     }
                 };
             }
