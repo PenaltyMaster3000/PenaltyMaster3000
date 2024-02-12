@@ -196,11 +196,12 @@
             </Image>
 
             <TextBlock Text="{Binding ActionText}"
-                       Grid.Row="1"
+                       Grid.Row="0"
                        Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        Background="Red"
                        FontWeight="Bold"
-                       FontSize="20"
+                       FontSize="30"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Visibility="{Binding ActionTextVisibility}"/>

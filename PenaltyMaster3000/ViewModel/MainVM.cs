@@ -46,6 +46,13 @@ namespace PenaltyMaster3000.ViewModel
 
         private int numberOfShoots = 0;
 
+        private string actualPlayer;
+        public string ActualPlayer
+        {
+            get => actualPlayer;
+            set => SetProperty(ref actualPlayer, value);
+        }
+
         private string actionText;
         public string ActionText
         {
@@ -184,6 +191,8 @@ namespace PenaltyMaster3000.ViewModel
 
             VsMgr = new VisibilityManager();
 
+            ActualPlayer = "Player 1";
+
             goalTimer.Interval = TimeSpan.FromSeconds(1);
             goalTimer.Tick += GoalTimer_Tick;
             goalTimer.Start();
@@ -237,12 +246,15 @@ namespace PenaltyMaster3000.ViewModel
             //int randomIndex = random.Next(goalVisibilities.Count);
 
             // Let the player choose a angle to shoot
-            await DisplayActionText("Shooter's turn. Get ready !", 2);
+            await DisplayActionText(ActualPlayer + " turn. Get ready !", 2);
             await DisplayActionText("Choose an angle to shoot.", 2);
 
             // Read a gesture for 5 seconds
             // Save the shot on the ShotHolder attribute
             ShotHolder = await ReadAGesture(2);
+
+            //Change the ActualPlayer value before call SaveMethod
+            SetActualPlayer(ActualPlayer);
 
             // IsShootCompleted = false;
             // Call the save method
@@ -252,7 +264,7 @@ namespace PenaltyMaster3000.ViewModel
 
         private async void Save()
         {
-            await DisplayActionText("GoalKeeper's turn. Get ready !", 2);
+            await DisplayActionText(ActualPlayer + " turn. Get ready !", 2);
             await DisplayActionText("Choose an angle to defend.", 2);
 
             DefenseHolder = await ReadAGesture(2);
@@ -424,6 +436,18 @@ namespace PenaltyMaster3000.ViewModel
 
             // return gestureRead;
             return gestureRead;
+        }
+
+        private void SetActualPlayer(string actualPlayer)
+        {
+            if(actualPlayer == "Player 1")
+            {
+                ActualPlayer = "Player 2";
+            }
+            else
+            {
+                ActualPlayer = "Player 1";
+            }
         }
     }
 }
