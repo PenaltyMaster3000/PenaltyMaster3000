@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MyGestureBank
 {
+    /// <summary>
+    /// The soccer shoot gesture.
+    /// </summary>
     public class SoccerShootGesture : Gesture
     {
         private CameraSpacePoint lastLeftFootPosition;
@@ -20,17 +23,24 @@ namespace MyGestureBank
             MaxNbOfFrames = 30;
         }
 
+        /// <summary>
+        /// Tests if the gesture is recognized.
+        /// </summary>
+        /// <param name="body"></param>
         public override void TestGesture(Body body)
         {
             if (TestPosture(body))
             {
                 Console.WriteLine("Gesture recognized, shooting motion");
-                Thread.Sleep(1000);
-
                 OnGestureRecognized();
             }
         }
 
+        /// <summary>
+        /// Tests the end conditions of the gesture.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
         protected override bool TestEndConditions(Body body)
         {
             float threshold = 0.05f;
@@ -39,25 +49,42 @@ namespace MyGestureBank
             return areFeetClose;
         }
 
+        /// <summary>
+        /// Tests the intial conditions of the gesture.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
         protected override bool TestInitialConditions(Body body)
         {
+            // Position of the feet + hips and head
             CameraSpacePoint currentLeftFootPosition = body.Joints[JointType.FootLeft].Position;
             CameraSpacePoint currentRightFootPosition = body.Joints[JointType.FootRight].Position;
             CameraSpacePoint currentHipPosition = body.Joints[JointType.SpineBase].Position;
             CameraSpacePoint currentHeadPosition = body.Joints[JointType.Head].Position;
 
+            // X and Y that should be respected
             bool isWithinDistanceX = Math.Abs(currentLeftFootPosition.X - currentRightFootPosition.X) < Math.Abs(currentHipPosition.Y - currentHeadPosition.Y);
             bool isWithinRangeY = IsFootBetweenHeadAndSpinBase(body.Joints[JointType.FootRight].Position, body.Joints[JointType.Head].Position, body.Joints[JointType.SpineBase].Position);
 
             return isWithinDistanceX && isWithinRangeY;
         }
 
+        /// <summary>
+        /// Test the posture
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
         protected override bool TestPosture(Body body)
         {
             bool isWithinRangeY = IsFootBetweenHeadAndSpinBase(body.Joints[JointType.FootRight].Position, body.Joints[JointType.Head].Position, body.Joints[JointType.SpineBase].Position);
             return isWithinRangeY;
         }
 
+        /// <summary>
+        /// Tests the running gesture
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
         protected override bool TestRunningGesture(Body body)
         {
             CameraSpacePoint currentLeftFootPosition = body.Joints[JointType.FootLeft].Position;

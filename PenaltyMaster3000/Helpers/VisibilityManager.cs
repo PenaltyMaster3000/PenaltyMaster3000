@@ -195,18 +195,22 @@ namespace PenaltyMaster3000.Helpers
             switch (gesturePosition)
             {
                 case "HandUpRight":
+                    HideQuestionPoint();
                     QuestionPointTopRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandUpLeft":
+                    HideQuestionPoint();
                     QuestionPointTopLeftVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownRight":
+                    HideQuestionPoint();
                     QuestionPointDownRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownLeft":
+                    HideQuestionPoint();
                     QuestionPointDownLeftVisibility = Visibility.Visible;
                     break;
 
@@ -258,7 +262,7 @@ namespace PenaltyMaster3000.Helpers
                     break;
 
                 case "HandDownLeft":
-                    BallTopRightVisibility = Visibility.Visible;
+                    BallDownLeftVisibility = Visibility.Visible;
                     break;
 
                 default: return;

@@ -29,7 +29,7 @@ namespace MyGestureBank
         {
             // Check if right hand is below the right hip
             var result = body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.HipRight].Position.Y &&
-                body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.HipLeft].Position.Y &&
+                body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.SpineBase].Position.Y &&
                 body.Joints[JointType.HandLeft].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
 
             return result;

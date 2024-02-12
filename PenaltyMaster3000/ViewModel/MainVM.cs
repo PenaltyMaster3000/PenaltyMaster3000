@@ -242,12 +242,12 @@ namespace PenaltyMaster3000.ViewModel
 
             // Read a gesture for 5 seconds
             // Save the shot on the ShotHolder attribute
-            ShotHolder = await ReadAGesture(2);
+            ShotHolder = await ReadAPosture();
 
-            // IsShootCompleted = false;
-            // Call the save method
-            Save();
             VsMgr.HideQuestionPoint();
+            await DisplayActionText("SHOOT!", 2);
+            await ReadShootingGesture();
+            Save();
         }
 
         private async void Save()
@@ -255,7 +255,7 @@ namespace PenaltyMaster3000.ViewModel
             await DisplayActionText("GoalKeeper's turn. Get ready !", 2);
             await DisplayActionText("Choose an angle to defend.", 2);
 
-            DefenseHolder = await ReadAGesture(2);
+            DefenseHolder = await ReadAPosture();
 
             // Arrêter le timer du déplacement automatique du Goal
             goalTimer.Stop();
@@ -388,8 +388,9 @@ namespace PenaltyMaster3000.ViewModel
         /*
          * Use the gesture manager to read a gesture
          */
-        private async Task<string> ReadAGesture(int ReadTimeInSeconds)
+        private Task<string> ReadAPosture()
         {
+            var tcs = new TaskCompletionSource<string>();
             string gestureRead = "";
 
             // load all 
@@ -403,27 +404,72 @@ namespace PenaltyMaster3000.ViewModel
                     // If new gesture read, replace th gesture name
                     if(gestureRead != args.GestureName)
                     {
-                        // [TODO?] Display gesture on screen
+                        // save the recognized gesture
                         gestureRead = args.GestureName;
+                        // display where
                         VsMgr.SetQuestionPoint(gestureRead);
-                        
+                        if (!tcs.Task.IsCompleted)
+                        {
+                            tcs.SetResult(args.GestureName);
+                        }
                     }
                 };
             }
 
             // Read frames for ReadTimeSeconds
             GestureManager.StartAcquiringFrames(GestureManager.KinectManager);
-            await Task.Delay(ReadTimeInSeconds*5000);
 
-            // Stop reading and unsub from the GestureRecognized event to prevent memory leaks
-            GestureManager.StopAcquiringFrame(GestureManager.KinectManager);
+            return tcs.Task.ContinueWith(t =>
+            {
+                // Stop reading and unsub from the GestureRecognized event to prevent memory leaks
+                GestureManager.StopAcquiringFrame(GestureManager.KinectManager);
+                foreach (var gesture in GestureManager.KnownGestures)
+                {
+                    gesture.GestureRecognized = null;
+                }
+
+                return t.Result;
+            });
+        }
+
+        private Task<bool> ReadShootingGesture()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            // load all 
+            GestureManager.AddGestures(this.GestureFactory);
+
+            // subscribe to the OnGestureRecognized event 
             foreach (var gesture in GestureManager.KnownGestures)
             {
-                gesture.GestureRecognized = null;
+                var soccerShootGesture = gesture as SoccerShootGesture;
+                if (soccerShootGesture != null)
+                {
+                    soccerShootGesture.GestureRecognized += (sender, args) =>
+                    {
+                        if (!tcs.Task.IsCompleted)
+                        {
+                            tcs.SetResult(true);
+                        }
+                    };
+
+                }
             }
 
-            // return gestureRead;
-            return gestureRead;
+            // Read frames for ReadTimeInSeconds
+            GestureManager.StartAcquiringFrames(GestureManager.KinectManager);
+
+            return tcs.Task.ContinueWith(t =>
+            {
+                // Stop reading and unsub from the GestureRecognized event to prevent memory leaks
+                GestureManager.StopAcquiringFrame(GestureManager.KinectManager);
+                foreach (var gesture in GestureManager.KnownGestures)
+                {
+                    gesture.GestureRecognized = null;
+                }
+
+                return t.Result;
+            });
         }
     }
 }

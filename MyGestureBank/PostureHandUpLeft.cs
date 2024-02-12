@@ -30,7 +30,7 @@ namespace MyGestureBank
             // Check if the left hand is above the left shoulder
             return body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.SpineShoulder].Position.Y &&
                 body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y &&
-                body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.HipRight].Position.Y;
+                body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.SpineBase].Position.Y;
         }
     }
 }
