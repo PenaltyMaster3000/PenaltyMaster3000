@@ -23,17 +23,17 @@ namespace PostureTester
 
             SoccerShootGesture soccerShootGesture = new SoccerShootGesture();
 
-            BaseGesture[] gestures = new BaseGesture[1];
-            /*gestures[0] = postureHandUpLeft;
-            gestures[1] = postureHandUpRight;
-            gestures[2] = postureHandDownLeft;
-            gestures[3] = postureHandDownRight;
-            gestures[4] = postureTwoHandsDown;
-            gestures[5] = postureTwoHandsUp;*/
+            IGestureFactory factory = new PenaltyMasterGestureFactory();
 
-            gestures[0] = soccerShootGesture;
+            GestureManager.AddGestures(factory);
 
-            GestureManager.AddGestures(gestures);
+            foreach (var gesture in GestureManager.KnownGestures)
+            {
+                gesture.GestureRecognized += (sender, arg) =>
+                {
+                    Console.WriteLine(arg.GestureName);
+                };
+            }
 
             GestureManager.StartAcquiringFrames(GestureManager.KinectManager);
 

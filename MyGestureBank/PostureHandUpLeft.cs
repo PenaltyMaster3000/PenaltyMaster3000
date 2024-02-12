@@ -20,21 +20,6 @@ namespace MyGestureBank
         }
 
         /// <summary>
-        /// The test gesture method.
-        /// </summary>
-        /// <param name="body">The body</param>
-        public override void TestGesture(Body body)
-        {
-            if (TestPosture(body))
-            {
-                Console.WriteLine("Gesture recognized, hand up left");
-                Thread.Sleep(1000);
-
-                OnGestureRecognized();
-            }
-        }
-
-        /// <summary>
         /// The test posture method.
         /// </summary>
         /// <param name="body"></param>
@@ -44,7 +29,8 @@ namespace MyGestureBank
         {
             // Check if the left hand is above the left shoulder
             return body.Joints[JointType.HandLeft].Position.Y > body.Joints[JointType.SpineShoulder].Position.Y &&
-                body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
+                body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y &&
+                body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.HipRight].Position.Y;
         }
     }
 }

@@ -207,7 +207,7 @@ namespace PenaltyMaster3000.Helpers
                     break;
 
                 case "HandDownLeft":
-                    QuestionPointTopRightVisibility = Visibility.Visible;
+                    QuestionPointDownLeftVisibility = Visibility.Visible;
                     break;
 
                 default: return;
@@ -246,22 +246,18 @@ namespace PenaltyMaster3000.Helpers
             switch (shotPosition)
             {
                 case "HandUpRight":
-                    QuestionPointTopRightVisibility = Visibility.Hidden;
                     BallTopRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandUpLeft":
-                    QuestionPointTopLeftVisibility = Visibility.Hidden;
                     BallTopLeftVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownRight":
-                    QuestionPointDownRightVisibility = Visibility.Hidden;
                     BallDownRightVisibility = Visibility.Visible;
                     break;
 
                 case "HandDownLeft":
-                    QuestionPointTopRightVisibility = Visibility.Hidden;
                     BallTopRightVisibility = Visibility.Visible;
                     break;
 
@@ -295,7 +291,7 @@ namespace PenaltyMaster3000.Helpers
                     break;
 
                 case "HandDownLeft":
-                    GoalTopRightVisibility = Visibility.Visible;
+                    GoalDownLeftVisibility = Visibility.Visible;
                     break;
 
                 default: return;
@@ -330,6 +326,16 @@ namespace PenaltyMaster3000.Helpers
             BallDownLeftVisibility = Visibility.Hidden;
             GoalDownLeftVisibility = Visibility.Hidden;
             QuestionPointDownLeftVisibility = Visibility.Hidden;
+        }
+
+        public void HideQuestionPoint()
+        {
+            QuestionPointTopRightVisibility = Visibility.Hidden;
+            QuestionPointTopMiddleVisibility = Visibility.Hidden;
+            QuestionPointTopLeftVisibility= Visibility.Hidden;
+            QuestionPointDownRightVisibility= Visibility.Hidden;
+            QuestionPointDownMiddleVisibility= Visibility.Hidden;
+            QuestionPointDownLeftVisibility= Visibility.Hidden;
         }
     }
 }

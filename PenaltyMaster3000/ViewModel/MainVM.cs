@@ -237,8 +237,8 @@ namespace PenaltyMaster3000.ViewModel
             //int randomIndex = random.Next(goalVisibilities.Count);
 
             // Let the player choose a angle to shoot
-            await DisplayActionText("Shooter's turn. Get ready !", 3);
-            await DisplayActionText("Choose an angle to shoot.", 5);
+            await DisplayActionText("Shooter's turn. Get ready !", 2);
+            await DisplayActionText("Choose an angle to shoot.", 2);
 
             // Read a gesture for 5 seconds
             // Save the shot on the ShotHolder attribute
@@ -247,12 +247,13 @@ namespace PenaltyMaster3000.ViewModel
             // IsShootCompleted = false;
             // Call the save method
             Save();
+            VsMgr.HideQuestionPoint();
         }
 
         private async void Save()
         {
-            await DisplayActionText("GoalKeeper's turn. Get ready !", 3);
-            await DisplayActionText("Choose an angle to defend.", 5);
+            await DisplayActionText("GoalKeeper's turn. Get ready !", 2);
+            await DisplayActionText("Choose an angle to defend.", 2);
 
             DefenseHolder = await ReadAGesture(2);
 
@@ -262,6 +263,7 @@ namespace PenaltyMaster3000.ViewModel
             // IsSaveCompleted = false;
 
             Result();
+            VsMgr.HideQuestionPoint();
         }
 
         private async void Result()
@@ -393,7 +395,7 @@ namespace PenaltyMaster3000.ViewModel
             // load all 
             GestureManager.AddGestures(this.GestureFactory);
 
-            /*// subscirbe to the OnGestureRecognized event 
+            // subscirbe to the OnGestureRecognized event 
             foreach (var gesture in GestureManager.KnownGestures)
             {
                 gesture.GestureRecognized += (sender, args) =>
@@ -403,27 +405,25 @@ namespace PenaltyMaster3000.ViewModel
                     {
                         // [TODO?] Display gesture on screen
                         gestureRead = args.GestureName;
-                        */
-                        gestureRead = "HandUpRight"; //TEST [TO REPLACE BY gestureRead = args.GestureName;]
                         VsMgr.SetQuestionPoint(gestureRead);
-                        /*
+                        
                     }
                 };
             }
 
             // Read frames for ReadTimeSeconds
             GestureManager.StartAcquiringFrames(GestureManager.KinectManager);
-            await Task.Delay(ReadTimeInSeconds*1000);
+            await Task.Delay(ReadTimeInSeconds*5000);
 
             // Stop reading and unsub from the GestureRecognized event to prevent memory leaks
             GestureManager.StopAcquiringFrame(GestureManager.KinectManager);
             foreach (var gesture in GestureManager.KnownGestures)
             {
                 gesture.GestureRecognized = null;
-            }*/
+            }
 
             // return gestureRead;
-            return "HandUpRight";
+            return gestureRead;
         }
     }
 }

@@ -24,20 +24,20 @@ namespace KinectUtils
             PostureHandUpLeft postureHandUpLeft = new PostureHandUpLeft();
             PostureHandDownLeft postureHandDownLeft = new PostureHandDownLeft();
             PostureHandDownRight postureHandDownRight = new PostureHandDownRight();
-            PostureTwoHandsDown postureTwoHandsDown = new PostureTwoHandsDown();
-            PostureTwoHandsUp postureTwoHandsUp = new PostureTwoHandsUp();
+            //PostureTwoHandsDown postureTwoHandsDown = new PostureTwoHandsDown();
+            //PostureTwoHandsUp postureTwoHandsUp = new PostureTwoHandsUp();
 
             // Gesture
             SoccerShootGesture soccerShootGesture = new SoccerShootGesture();
 
-            BaseGesture[] gestures = new BaseGesture[7];
+            BaseGesture[] gestures = new BaseGesture[5];
             gestures[0] = postureHandUpLeft;
             gestures[1] = postureHandUpRight;
             gestures[2] = postureHandDownLeft;
             gestures[3] = postureHandDownRight;
-            gestures[4] = postureTwoHandsDown;
-            gestures[5] = postureTwoHandsUp;
-            gestures[6] = soccerShootGesture;
+            //gestures[4] = postureTwoHandsDown;
+            //gestures[5] = postureTwoHandsUp;
+            gestures[4] = soccerShootGesture;
 
             return gestures;
         }

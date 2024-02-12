@@ -20,20 +20,6 @@ namespace MyGestureBank
         }
 
         /// <summary>
-        /// The test gesture method.
-        /// </summary>
-        /// <param name="body">The body</param>
-        public override void TestGesture(Body body)
-        {
-            if (TestPosture(body))
-            {
-                Console.WriteLine("Gesture recognized, both hands middle");
-                Thread.Sleep(1000);
-                OnGestureRecognized();
-            }
-        }
-
-        /// <summary>
         /// The test posture method.
         /// </summary>
         /// <param name="body"></param>

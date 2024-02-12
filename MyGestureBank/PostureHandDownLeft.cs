@@ -20,21 +20,6 @@ namespace MyGestureBank
         }
 
         /// <summary>
-        /// The test gesture method.
-        /// </summary>
-        /// <param name="body">The body</param>
-        public override void TestGesture(Body body)
-        {
-            if (TestPosture(body))
-            {
-                Console.WriteLine("Gesture recognized, hand down left");
-                Thread.Sleep(1000);
-
-                OnGestureRecognized();
-            }
-        }
-
-        /// <summary>
         /// The test posture method.
         /// </summary>
         /// <param name="body"></param>
@@ -43,7 +28,14 @@ namespace MyGestureBank
         protected override bool TestPosture(Body body)
         {
             // Check if the left hand is below the left hip
-            return body.Joints[JointType.HandLeft].Position.Y < body.Joints[JointType.HipLeft].Position.Y;
+
+            bool handLeft = body.Joints[JointType.HandLeft].Position.Y < body.Joints[JointType.HipLeft].Position.Y;
+
+            var result = handLeft &&
+                body.Joints[JointType.HandRight].Position.Y > body.Joints[JointType.HipRight].Position.Y &&
+                body.Joints[JointType.HandRight].Position.Y < body.Joints[JointType.SpineShoulder].Position.Y;
+
+            return result;
         }
     }
 }
