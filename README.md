@@ -16,9 +16,14 @@ Sommaire
 
 <div id='acces'/>   
 
+## :rotating_light: Branches
+* La totalité des tps et le projet se trouvent dans la branche `master` (__sauf pour la partie 3 de l'exo 2__)
+* La partie 3 de l'exercice 2 (__mapping__) se trouve dans la branche `ex2-part3-mapping-et-factory`
+* Les branches crées au long de la période n'ont pas été supprimées afin de mettre a disposition un historique du travail effectuer.
+
 ## Accessibilité ↗
 
-> **Warning**: Le déploiement n'a pas encore été fait. 
+> :warning: **Warning**: Le déploiement n'a pas encore été fait. 
 
 Pour lancer le projet **Penalty Master 3000**, vous devrez cloner le répertoire, ouvrir le projet dans Visual Studio et définir la solution PenaltyMaster3000 comme projet de démarrage.  
 
