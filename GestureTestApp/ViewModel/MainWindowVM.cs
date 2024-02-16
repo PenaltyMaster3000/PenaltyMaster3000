@@ -12,7 +12,6 @@ namespace KinectSensorStreams.ViewModel
     public class MainWindowVM : ObservableObject
     {
         private BodyImageStream bodyImageStream;
-        private GestureManager gestureManager;
 
         #region Properties
 
@@ -32,15 +31,6 @@ namespace KinectSensorStreams.ViewModel
             set { SetProperty(ref bodyImageStream, value); }
         }
 
-        /// <summary>
-        /// The Gesture Manager property.
-        /// </summary>
-        public GestureManager GestureManager
-        {
-            get { return gestureManager; }
-            set { SetProperty(ref gestureManager, value); }
-        }
-
         #endregion
 
         #region Constructor 
@@ -49,10 +39,7 @@ namespace KinectSensorStreams.ViewModel
         /// Constructeur du ViewModel de la page principale
         /// </summary>
         public MainWindowVM()
-        {
-            // eventuellement a enlever :
-            GestureManager = new GestureManager();
-            
+        {   
             StartCommand = new RelayCommand(Start);
             BodyCommand = new RelayCommand(Body);
         }
