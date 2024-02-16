@@ -7,6 +7,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinectSensorStreams", "Kine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectConnection", "KinectConnection\KinectConnection.csproj", "{E527438A-DFA2-4EC6-9891-D4956152B093}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenaltyMaster3000", "PenaltyMaster3000\PenaltyMaster3000.csproj", "{F9E01E2C-70D7-43EB-B665-82424DB7BBC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectUtils", "KinectUtils\KinectUtils.csproj", "{2BC300E4-D3C1-4E17-A011-380EDB793182}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGestureBank", "MyGestureBank\MyGestureBank.csproj", "{D70B7357-6FF8-4F35-A283-8DB4217C0C85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostureTester", "PostureTester\PostureTester.csproj", "{7C427E13-E012-4C29-97ED-1792BA40F063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestureTestApp", "GestureTestApp\GestureTestApp.csproj", "{E44C939A-B8C8-418B-BB98-CDBCACDD5074}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D70B7357-6FF8-4F35-A283-8DB4217C0C85} = {D70B7357-6FF8-4F35-A283-8DB4217C0C85}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +33,26 @@ Global
 		{E527438A-DFA2-4EC6-9891-D4956152B093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E527438A-DFA2-4EC6-9891-D4956152B093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E527438A-DFA2-4EC6-9891-D4956152B093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9E01E2C-70D7-43EB-B665-82424DB7BBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9E01E2C-70D7-43EB-B665-82424DB7BBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9E01E2C-70D7-43EB-B665-82424DB7BBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9E01E2C-70D7-43EB-B665-82424DB7BBC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC300E4-D3C1-4E17-A011-380EDB793182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC300E4-D3C1-4E17-A011-380EDB793182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC300E4-D3C1-4E17-A011-380EDB793182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC300E4-D3C1-4E17-A011-380EDB793182}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D70B7357-6FF8-4F35-A283-8DB4217C0C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C427E13-E012-4C29-97ED-1792BA40F063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44C939A-B8C8-418B-BB98-CDBCACDD5074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44C939A-B8C8-418B-BB98-CDBCACDD5074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44C939A-B8C8-418B-BB98-CDBCACDD5074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44C939A-B8C8-418B-BB98-CDBCACDD5074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

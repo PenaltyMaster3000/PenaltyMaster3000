@@ -101,6 +101,10 @@ namespace KinectSensorStreams.ViewModel
             {
                 KinectStream.Stop();
             }
+            if (KinectStream2 != null)
+            {
+                KinectStream2.Stop();
+            }
             KinectStream = KinectStreamsFactory[KinectStreams.Color];
             KinectStream.Start();
         }
@@ -110,6 +114,10 @@ namespace KinectSensorStreams.ViewModel
             if (KinectStream != null)
             {
                 KinectStream.Stop();
+            }
+            if (KinectStream2 != null)
+            {
+                KinectStream2.Stop();
             }
             KinectStream = KinectStreamsFactory[KinectStreams.Body];
             KinectStream.Start();
@@ -121,6 +129,10 @@ namespace KinectSensorStreams.ViewModel
             {
                 KinectStream.Stop();
             }
+            if (KinectStream2 != null)
+            {
+                KinectStream2.Stop();
+            }
             KinectStream = KinectStreamsFactory[KinectStreams.IR];
             KinectStream.Start();
         }
@@ -131,15 +143,22 @@ namespace KinectSensorStreams.ViewModel
             {
                 KinectStream.Stop();
             }
+            if (KinectStream2 != null)
+            {
+                KinectStream2.Stop();
+            }
             KinectStream = KinectStreamsFactory[KinectStreams.Depth];
             KinectStream.Start();
         }
 
         private void BodyColor()
         {
-            if (KinectStream != null ||KinectStream2 != null)
+            if (KinectStream != null)
             {
                 KinectStream.Stop();
+            }
+            if (KinectStream2 != null)
+            {
                 KinectStream2.Stop();
             }
             KinectStream = KinectStreamsFactory[KinectStreams.Color];
