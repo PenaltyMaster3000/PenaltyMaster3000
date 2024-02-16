@@ -12,8 +12,10 @@ namespace KinectUtils
     /// </summary>
     public class PenaltyMasterGestureFactory : IGestureFactory
     {
+        private Dictionary<string, BaseGesture> gestures = new Dictionary<string, BaseGesture>();
+
         /// <summary>
-        /// Creates all baseGesture objects needed for the penaly master 
+        /// Creates all baseGesture objects needed for the penalty master 
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -30,16 +32,32 @@ namespace KinectUtils
             // Gesture
             SoccerShootGesture soccerShootGesture = new SoccerShootGesture();
 
-            BaseGesture[] gestures = new BaseGesture[5];
-            gestures[0] = postureHandUpLeft;
-            gestures[1] = postureHandUpRight;
-            gestures[2] = postureHandDownLeft;
-            gestures[3] = postureHandDownRight;
-            //gestures[4] = postureTwoHandsDown;
-            //gestures[5] = postureTwoHandsUp;
-            gestures[4] = soccerShootGesture;
+            // Add gestures to the dictionary
+            gestures.Add("PostureHandUpRight", postureHandUpRight);
+            gestures.Add("PostureHandUpLeft", postureHandUpLeft);
+            gestures.Add("PostureHandDownLeft", postureHandDownLeft);
+            gestures.Add("PostureHandDownRight", postureHandDownRight);
+            //gestures.Add("PostureTwoHandsDown", postureTwoHandsDown);
+            //gestures.Add("PostureTwoHandsUp", postureTwoHandsUp);
+            gestures.Add("SoccerShootGesture", soccerShootGesture);
 
-            return gestures;
+            return gestures.Values;
+        }
+
+        // Indexer to get a gesture by its name
+        public BaseGesture this[string name]
+        {
+            get
+            {
+                if (gestures.ContainsKey(name))
+                {
+                    return gestures[name];
+                }
+                else
+                {
+                    throw new KeyNotFoundException($"Gesture with name {name} not found.");
+                }
+            }
         }
     }
 }
