@@ -39,12 +39,16 @@ Votre simulateur de séance de penalty en réalité virtuelle !
 ## Règles du jeu 📖  
 
 Une fois la partie lancée, son déroulement est assez linéaire en suivant une même boucle de jeu :   
-- le tireur simule un tir pour lancer la sélection de la zone de tir avec une certaine posture.  
+- le tireur sélectionne de la zone de tir avec une certaine posture.  
+- le tireur simule un tir pour passer au tour du gardien.
 - le gardien sélectionne sa zone d'arrêt avec une posture spécifique.  
-  
+
 A la fin du tour, les joueurs changent de rôle et continue la partie.  
 
 Au bout de 10 tirs, le joueur ayant inscrit le plus de buts remporte la partie. En cas d'égalité, les joueurs repartent sur 1 tir supplémentaire chacun jusqu'il y ait un résultat positif pour l'un des joueurs.  
+
+Les 4 postures possibles sont : `main gauche en haut`, `main haut droite`, `main bas gauche` et `main bas droite`.  
+La gesture de tir consiste à lever son pied vers l'avant comme si l'on tirait dans un ballon (le pied doit monter assez haut).  
 
 *******
 
